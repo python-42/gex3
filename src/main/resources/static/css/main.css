@@ -1,0 +1,9 @@
+body {
+    background: linear-gradient(to left, #007bff, #6c757d);
+}
+
+@media (min-width: 576px) {
+    .jumbotron-heading {
+        font-size: 9rem;
+    }
+}

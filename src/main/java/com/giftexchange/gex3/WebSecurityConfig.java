@@ -16,7 +16,7 @@ public class WebSecurityConfig {
      public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests()
-            .antMatchers("/", "/create", "/css/*", "/favicon.ico").permitAll()//Remember to allow access to static resources such as stylesheets
+            .antMatchers("/create", "/css/*", "/favicon.ico").permitAll()//Remember to allow access to static resources such as stylesheets
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

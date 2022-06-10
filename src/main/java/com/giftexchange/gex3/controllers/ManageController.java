@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ManageController {
     
-    @GetMapping("/manage")
+    @GetMapping("/")
     public String content(){
         return "manage";
     }

@@ -1,14 +1,13 @@
-package com.giftexchange.gex3.controllers;
+package com.giftexchange.gex3;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.giftexchange.gex3.Constants;
 import com.giftexchange.gex3.util.NavblockGenerator;
 
 @Controller
-public class ManageController {
+public class Gex3Controller {
     
     @GetMapping("/")
     public String manage(Model model){

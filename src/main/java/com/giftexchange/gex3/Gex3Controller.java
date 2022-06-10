@@ -31,15 +31,5 @@ public class Gex3Controller {
     public String login(){
         return "login";
     }
-
-    @GetMapping("/error")
-    public String error(){
-        return "error";
-     }
-
-
-
-
-
-
+    
 }

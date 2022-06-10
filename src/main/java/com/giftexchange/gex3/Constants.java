@@ -24,7 +24,8 @@ public final class Constants {
             INDEX.get(2).put("name", "Create Account");
             INDEX.get(2).put("url", "create");
 
-            System.out.println(INDEX);
+            INDEX.add(new HashMap<String, String>());
+            INDEX.get(3).put("name", "Logout");
         }
     }
 }

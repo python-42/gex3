@@ -15,7 +15,10 @@ public class NavblockGenerator {
         String rtn = "";
 
         for (Map<String, String> map : pages){
-            if(map.get("type") == "ACTIVE"){
+            if(map.get("name") == "Logout"){
+                rtn += "<button type='button' class='btn bg-white btn-block border border-body' data-toggle='modal' data-target='#logoutModal'>Logout</button>";
+            }
+            else if(map.get("type") == "ACTIVE"){
                 rtn += "<button type='button' class='btn btn-primary btn-block active border border-body'>"+ map.get("name") +"</button>";//TODO make this some type of constant
             }else{
                 rtn += "<button type='button' class='btn bg-white btn-block border border-body' onclick='location.assign(\""+ map.get("url") +"\")'>"+ map.get("name") +"</button>";//TODO make this some type of constant

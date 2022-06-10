@@ -6,26 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 public final class Constants {
-    public final class NavblockConstants{
-        public static List<Map<String, String>> INDEX = new ArrayList<Map<String, String>>();
+    public static List<Map<String, String>> NAVBLOCK_MAP = new ArrayList<Map<String, String>>();
 
-        public static void initNavblockConstants(){
-            INDEX.add(new HashMap<String, String>());
-            INDEX.get(0).put("type", "ACTIVE");
-            INDEX.get(0).put("name", "Home");
+    public static void initNavblockConstant(){
+        NAVBLOCK_MAP.add(new HashMap<String, String>());
+        NAVBLOCK_MAP.get(0).put("name", "Account");
+        NAVBLOCK_MAP.get(0).put("url", "/acccount");
 
-            INDEX.add(new HashMap<String, String>());
-            INDEX.get(1).put("type", "SHOWN");
-            INDEX.get(1).put("name", "Login");
-            INDEX.get(1).put("url", "/login");
+        NAVBLOCK_MAP.add(new HashMap<String, String>());
+        NAVBLOCK_MAP.get(1).put("name", "Lists");
+        NAVBLOCK_MAP.get(1).put("url", "/lists");
 
-            INDEX.add(new HashMap<String, String>());
-            INDEX.get(2).put("type", "SHOWN");
-            INDEX.get(2).put("name", "Create Account");
-            INDEX.get(2).put("url", "create");
+        NAVBLOCK_MAP.add(new HashMap<String, String>());
+        NAVBLOCK_MAP.get(2).put("name", "Your List");
+        NAVBLOCK_MAP.get(2).put("url", "/");
 
-            INDEX.add(new HashMap<String, String>());
-            INDEX.get(3).put("name", "Logout");
+        NAVBLOCK_MAP.add(new HashMap<String, String>());
+        NAVBLOCK_MAP.get(3).put("name", "Bought");
+        NAVBLOCK_MAP.get(3).put("url", "/bought");
+
+        NAVBLOCK_MAP.add(new HashMap<String, String>());
+        NAVBLOCK_MAP.get(4).put("name", "Logout");
         }
     }
-}

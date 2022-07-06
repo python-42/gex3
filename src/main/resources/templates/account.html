@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="fragments/header :: header">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron text-center mt-2">
+            <h1 class="jumbotron-heading">
+                <strong>SETTINGS</strong></h1>
+        </div>
+        <div class="row">
+
+            <div class='col-sm-2 pb-3 bg-secondary'>
+                <h2>Navigation</h2>
+                <div class="btn-group-vertical btn-block" th:utext="${navblock}"></div>
+            </div>
+            <!--end of nav-->
+
+            <div th:replace="fragments/logoutModal :: logoutModal"></div>
+
+            <div class="col-sm-10 bg-primary pt-3">
+                <ul class="nav nav-tabs bg-white border border-dark">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#account">Account</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" data-toggle="tab" href="#danger">Danger</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane container active" id="profile">
+                        <h1>Profile</h1>
+                        <p class="text-dark">Change settings having to do with your profile here.</p>
+                        <h2>Interest</h2>
+                        <p class="text-dark">What are your hobbies or interests? 100 characters or less.</p>
+
+                        <form method="post" id="interestForm" class="form-group" autocomplete="off"
+                            action="interest.php">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Interest:</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="What are your interests?"
+                                    name="interest-box" id="interest-box" maxlength="100" required>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-success border border-dark"
+                                        name="interest_submit">Save</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="card m-3">
+                            <div class="card-body  p-3">
+                                <h4 class="card-title">Current Interest: </h4>
+                                <p class="card-text" id="interest-text"></p>
+                            </div>
+                        </div>
+
+                        <h3>Birthday</h3>
+                        <p class="text-dark">Add or change your birthday here.</p>
+
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <h4 class="card-title">Current Birthday:</h4>
+                                <p class="text-dark">(Format is YYYY/MM/DD)</p>
+                                <p class="card-text text-dark mx-auto" id="birthday-text"></p>
+                            </div>
+                        </div>
+
+                        <form class="bg-dark text-primary p-3 mt-3" method="post" autocomplete="off" id="birthdayForm" action="birthday.php">
+                            <div class="form-group">
+                                <label for="date-box">Set Birthday: </label>
+                                <input type="date" name="date-box" id="date-box" class="form-control" required>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </form>
+                    </div><!--end of profile-->
+
+                    <div class="tab-pane container fade" id="account">
+                        <h4>Account Settings</h4>
+                        <p class="text-dark">Change settings which have to do with your account here.</p>
+                        
+                        <h3>Email</h3>
+                        <p class="text-dark">Add or change your email address.</p>
+
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <h4 class="card-title">Current Email Address:</h4>
+                                <p class="card-text text-dark mx-auto" id="email-text"></p>
+                            </div>
+                        </div>
+
+                        <form class="bg-dark text-primary p-3 mt-3" method="post" autocomplete="off" id="emailForm" >
+                            <div class="form-group">
+                                <label for="email-box">Set Email Address: </label>
+                                <input type="email" name="email-box" id="email-box" placeholder="someone@example.com" class="form-control" required>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </form>
+                        
+                        <h3>Password</h3>
+                        <p class="text-dark">Change your password here.</p>
+
+                        <form method="post" class="bg-dark text-primary p-3" autocomplete="off" name="passwordForm" id="passwordForm">
+                            <div class="form-group">
+                                <label for="current-box">Current Password:</label>
+                                <input type="password" class="form-control"
+                                    placeholder="Enter your current password for security" name="current-box"
+                                    id="current-box" minlength="5" maxlength="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-box">New Password:</label>
+                                <input type="password" class="form-control" placeholder="Enter your new password"
+                                    name="new-box" id="new-box" minlength="5" maxlength="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-box">Confirm Password:</label>
+                                <input type="password" class="form-control"
+                                    placeholder="Confirm your new password" name="confirm-box" id="confirm-box"
+                                    minlength="5" maxlength="20" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="updatePassword">Submit</button>
+                            <p class="text-danger" id="errorTxt"></p>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane container fade" id="danger">
+                        <div class="pt-3 pb-3">
+                            <h4>Danger</h4>
+                            <p class="text-dark">Be careful when changing these settings!</p>
+                            <h3>Delete Items</h3>
+                            <p class="text-warning">This will delete all items entered into the Gift Exchange
+                                database! This action is irreversible!</p>
+                            <p class="text-dark">You currently have <b id="itemNumberOutput"></b>
+                                items.</p>
+                            <button class="btn btn-danger" id="deleteItemsModal" type="button" data-toggle="modal"
+                                data-target="#deleteItems" title="Delete all items">Delete Items</button>
+                                <p id="deleteItemsOutput"></p>
+                            <h3 class="mt-2">Delete Account</h3>
+                            <p class="text-warning">This will permanently delete your account and all of your items!
+                                This action is irreversible!</p>
+                            <button class="btn btn-danger" type="button" data-toggle="modal"
+                                data-target="#deleteAccount" title="Delete your account">Delete Account</button>
+
+                        </div>
+                        <!--start of delete items modal-->
+                        <div class="modal" id="deleteItems">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Delete Items</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>Are you sure you would like to delete all of your items? This action is
+                                            irreversible. You will always be able to add new items.</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-muted border border-dark"
+                                            data-dismiss="modal">Cancel</button>
+                                        <form method="post" name="deleteForm" id="deleteForm">
+                                            <button type="submit" name="deleteItems" id="deleteItems"
+                                                class="btn btn-danger">Delete Items</button>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--end of delete items modal-->
+
+                        <!--start of delete account modal-->
+                        <div class="modal" id="deleteAccount">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Delete Account</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>Are you sure you would like to delete your account? All of your items, as
+                                            well as any other information (such as login information) will be
+                                            deleted. This action is permenant and irreversible. </p>
+                                        <p>If you are sure you would like to continue, enter your login information
+                                            to confirm it is actually you.</p>
+                                        <form method="post" autocomplete="off">
+                                            <div class="form-group">
+                                                <label for="username-box">Username: </label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="Enter your username" name="username-box"
+                                                    id="username-box" maxlength="20" minlength="4" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="password-box">Password: </label>
+                                                <input type="password" class="form-control"
+                                                    placeholder="Enter your password" name="password-box"
+                                                    id="password-box" maxlength="20" required>
+                                            </div>
+
+                                            <button type="submit" name="deleteAccount" id="deleteAccount"
+                                                class="btn btn-danger">Delete Account</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-muted border border-dark"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--end of delete account modal-->
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!--end of main content section-->
+        </div>
+        <!--end of .row-->
+    </div>
+    <!--end of .container-fluid-->
+</html>

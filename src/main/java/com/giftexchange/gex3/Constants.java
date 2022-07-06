@@ -11,7 +11,7 @@ public final class Constants {
     public static void initNavblockConstant(){
         NAVBLOCK_MAP.add(new HashMap<String, String>());
         NAVBLOCK_MAP.get(0).put("name", "Account");
-        NAVBLOCK_MAP.get(0).put("url", "/acccount");
+        NAVBLOCK_MAP.get(0).put("url", "/account");
 
         NAVBLOCK_MAP.add(new HashMap<String, String>());
         NAVBLOCK_MAP.get(1).put("name", "Lists");

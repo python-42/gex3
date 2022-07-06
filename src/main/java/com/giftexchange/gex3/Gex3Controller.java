@@ -27,6 +27,12 @@ public class Gex3Controller {
         return "account";
     }
 
+    @GetMapping("/bought")
+    public String bought(Model model){
+        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Bought"));
+        return "bought";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";

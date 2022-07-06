@@ -17,7 +17,7 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests()
             .antMatchers("/create", "/css/*", "/favicon.ico").permitAll()//Remember to allow access to static resources such as stylesheets
-				.anyRequest().authenticated()
+				.anyRequest().authenticated()//Require authentication for any urls not listed above
 				.and()
 			.formLogin()
 				.loginPage("/login")

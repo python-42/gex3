@@ -37,5 +37,10 @@ public class Gex3Controller {
     public String login(){
         return "login";
     }
+
+    @GetMapping("/create")
+    public String create(){
+        return "create";
+    }
     
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 
 public final class Constants {
     public static List<Map<String, String>> NAVBLOCK_MAP = new ArrayList<Map<String, String>>();
+    public static final String ROLE_PREFIX = "ROLE_";
 
     public static void initNavblockConstant(){
         NAVBLOCK_MAP.add(new HashMap<String, String>());

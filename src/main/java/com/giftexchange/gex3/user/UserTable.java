@@ -15,6 +15,8 @@ public class UserTable {
 		this.username = username;
 		this.password = password;
 		this.enabled = true;
+		this.emailEnabled = false;
+		this.interest = "No interest yet.";
 	}
 
 	@Id
@@ -30,6 +32,15 @@ public class UserTable {
 	@Column(nullable = false)
 	private boolean enabled;
 
+	@Column
+	private String interest;
+
+	@Column
+	private String email;
+
+	@Column(nullable = false)
+	private boolean emailEnabled;
+
 	//getters and setters
 	public Integer getId() {
 		return id;
@@ -40,7 +51,7 @@ public class UserTable {
 	  }
 
 	public String getUsername(){
-		return password;
+		return username;
 	}
 
 	public void setUsername(String username){
@@ -61,6 +72,30 @@ public class UserTable {
 
 	public void setEnabled(boolean enabled){
 		this.enabled = enabled;
+	}
+
+	public String getInterest(){
+		return interest;
+	}
+
+	public void setInterest(String interest){
+		this.interest = interest;
+	}
+
+	public String getEmail(){
+		return email;
+	}
+
+	public void setEmail(String email){
+		this.email = email;
+	}
+
+	public boolean getEmailEnabled(){
+		return emailEnabled;
+	}
+
+	public void setEmailEnabled(boolean emailEnabled){
+		this.emailEnabled = emailEnabled;
 	}
 	
 }

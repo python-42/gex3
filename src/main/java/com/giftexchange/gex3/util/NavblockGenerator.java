@@ -3,6 +3,8 @@ package com.giftexchange.gex3.util;
 import java.util.List;
 import java.util.Map;
 
+import com.giftexchange.gex3.Constants;
+
 public class NavblockGenerator {
 
     /* 
@@ -15,12 +17,12 @@ public class NavblockGenerator {
 
         for (Map<String, String> map : pages){
             if(map.get("name") == "Logout"){
-                rtn += "<button type='button' class='btn bg-white btn-block border border-body' data-toggle='modal' data-target='#logoutModal'>Logout</button>";
+                rtn += "<button type='button' class='"+Constants.CSS_NAVBLOCK_CLICKABLE+"' data-toggle='modal' data-target='#logoutModal'>Logout</button>";
             }
             else if(map.get("name") == currentPage){
-                rtn += "<button type='button' class='btn btn-primary btn-block active border border-body'>"+ map.get("name") +"</button>";//TODO make this some type of constant
+                rtn += "<button type='button' class='"+Constants.CSS_NAVBLOCK_ACTIVE+"'>"+ map.get("name") +"</button>";
             }else{
-                rtn += "<button type='button' class='btn bg-white btn-block border border-body' onclick='location.assign(\""+ map.get("url") +"\")'>"+ map.get("name") +"</button>";//TODO make this some type of constant
+                rtn += "<button type='button' class='"+Constants.CSS_NAVBLOCK_CLICKABLE+"' onclick='location.assign(\""+ map.get("url") +"\")'>"+ map.get("name") +"</button>";
             }
         }
 

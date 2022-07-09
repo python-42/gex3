@@ -9,6 +9,10 @@ public final class Constants {
     public static List<Map<String, String>> NAVBLOCK_MAP = new ArrayList<Map<String, String>>();
     public static final String ROLE_PREFIX = "ROLE_";
 
+    //CSS Constants
+    public static final String CSS_NAVBLOCK_ACTIVE = "btn btn-primary btn-block active border border-body";
+    public static final String CSS_NAVBLOCK_CLICKABLE = "btn bg-white btn-block border border-body";
+
     public static void initNavblockConstant(){
         NAVBLOCK_MAP.add(new HashMap<String, String>());
         NAVBLOCK_MAP.get(0).put("name", "Account");

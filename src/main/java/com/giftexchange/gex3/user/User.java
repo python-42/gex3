@@ -1,66 +1,68 @@
 package com.giftexchange.gex3.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-@Entity
-public class User {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-	public User(){}
+import com.giftexchange.gex3.Constants;
 
-	public User(String username, String password){
-		this.username = username;
-		this.password = password;
-		this.enabled = true;
-	}
+public class User implements UserDetails {
+    private UserTable user;
+    private String role;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+    public User(UserTable user, String role) {
+        this.user = user;
+        this.role = role;
+    }
 
-	@Column(nullable = false, unique = true)
-	private String username;
+    public User(UserTable user){
+        this.user = user;
+        this.role = "USER";
+    }
 
-	@Column(nullable = false)
-	private String password;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        list.add(new SimpleGrantedAuthority(Constants.ROLE_PREFIX + role));
+        return list;
+    }
 
-	@Column(nullable = false)
-	private boolean enabled;
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
 
-	//getters and setters
-	public Integer getId() {
-		return id;
-	  }
-	
-	  public void setId(Integer id) {
-		this.id = id;
-	  }
+    @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
 
-	public String getUsername(){
-		return password;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
 
-	public void setUsername(String username){
-		this.username = username;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return true;
+    }
 
-	public String getPassword(){
-		return password;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return true;
+    }
 
-	public void setPassword(String password){
-		this.password = password;
-	}
+    @Override
+    public boolean isEnabled() {
+        return user.getEnabled();
+    }
 
-	public boolean getEnabled(){
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled){
-		this.enabled = enabled;
-	}
-	
+    
 }

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.giftexchange.gex3.forms.WebsocketFormData;
+import com.giftexchange.gex3.sql.UserRepository;
+import com.giftexchange.gex3.sql.UserTable;
 import com.giftexchange.gex3.forms.UserCreationForm;
 import com.giftexchange.gex3.user.User;
-import com.giftexchange.gex3.user.UserRepository;
-import com.giftexchange.gex3.user.UserTable;
 import com.giftexchange.gex3.util.NavblockGenerator;
 import com.giftexchange.gex3.websocket.WebsocketServerResponse;
 

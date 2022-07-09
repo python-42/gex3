@@ -1,4 +1,4 @@
-package com.giftexchange.gex3;
+package com.giftexchange.gex3.sql;
 
 import org.springframework.data.repository.CrudRepository;
 

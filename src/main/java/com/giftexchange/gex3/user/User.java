@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.giftexchange.gex3.Constants;
+import com.giftexchange.gex3.sql.UserTable;
 
 public class User implements UserDetails {
     private UserTable user;

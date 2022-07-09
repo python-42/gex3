@@ -1,4 +1,4 @@
-package com.giftexchange.gex3;
+package com.giftexchange.gex3.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

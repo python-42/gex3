@@ -1,4 +1,4 @@
-package com.giftexchange.gex3.user;
+package com.giftexchange.gex3.sql;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

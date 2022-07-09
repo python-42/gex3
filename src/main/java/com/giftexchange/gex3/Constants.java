@@ -12,6 +12,8 @@ public final class Constants {
     //CSS Constants
     public static final String CSS_NAVBLOCK_ACTIVE = "btn btn-primary btn-block active border border-body";
     public static final String CSS_NAVBLOCK_CLICKABLE = "btn bg-white btn-block border border-body";
+    public static final String CSS_DISMISSABLE_SUCCESS_MODAL = "<div class='alert alert-success alert-dismisible mt-3'><button type='button' class='close' data-dismiss='alert'>&times;</button>";
+    public static final String CSS_DISMISSABLE_ERROR_MODAL = "<div class='alert alert-danger alert-dismissible mt-3'><button type='button' class='close' data-dismiss='alert'>&times;</button>";
 
     public static void initNavblockConstant(){
         NAVBLOCK_MAP.add(new HashMap<String, String>());

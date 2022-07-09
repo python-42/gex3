@@ -1,6 +1,8 @@
 package com.giftexchange.gex3;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,11 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.giftexchange.gex3.forms.WebsocketFormData;
 import com.giftexchange.gex3.forms.UserCreationForm;
 import com.giftexchange.gex3.user.User;
 import com.giftexchange.gex3.user.UserRepository;
 import com.giftexchange.gex3.user.UserTable;
 import com.giftexchange.gex3.util.NavblockGenerator;
+import com.giftexchange.gex3.websocket.WebsocketServerResponse;
 
 @Controller
 public class Gex3Controller {
@@ -24,7 +28,7 @@ public class Gex3Controller {
     private UserRepository userRepository;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    
+
     @GetMapping("/")
     public String manage(Model model){
         model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Your List"));
@@ -38,10 +42,28 @@ public class Gex3Controller {
     }
 
     @GetMapping("/account")
-    public String account(Model model){
+    public String account(Model model, Authentication auth){
         model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Account"));
+        UserTable userInfo = userRepository.findByUsername(auth.getName());
+        model.addAttribute("interest", userInfo.getInterest());
+        if(userInfo.getEmailEnabled()){
+            model.addAttribute("email", userInfo.getEmail());
+        }else{
+            model.addAttribute("email", "Email disabled.");
+        }
         return "account";
     }
+
+    @MessageMapping("/accountSocket")
+    @SendTo("/socket/account")
+    public WebsocketServerResponse accountWebSocket(WebsocketFormData data, Authentication auth) throws Exception {
+        UserTable userInfo = userRepository.findByUsername(auth.getName());
+        userInfo.setInterest((String) data.getDataPart(0));
+        userRepository.save(userInfo);
+        return new WebsocketServerResponse(data.getData());
+    }
+
+
 
     @GetMapping("/bought")
     public String bought(Model model){

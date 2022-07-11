@@ -10,16 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.giftexchange.gex3.gex.Constants;
 
-public class User implements UserDetails {
+public class GexUserDetails implements UserDetails {
     private UserTable user;
     private String role;
 
-    public User(UserTable user, String role) {
+    public GexUserDetails(UserTable user, String role) {
         this.user = user;
         this.role = role;
     }
 
-    public User(UserTable user){
+    public GexUserDetails(UserTable user){
         this.user = user;
         this.role = "USER";
     }

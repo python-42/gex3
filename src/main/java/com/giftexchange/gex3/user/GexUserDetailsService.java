@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService {
+public class GexUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -18,7 +18,7 @@ public class UserService implements UserDetailsService {
         if (user == null){
             throw new UsernameNotFoundException(username);
         }
-        return new User(user);
+        return new GexUserDetails(user);
     }
     
 }

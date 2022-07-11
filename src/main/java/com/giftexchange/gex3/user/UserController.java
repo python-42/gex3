@@ -38,51 +38,26 @@ public class UserController {
 
     @GetMapping("/create")
     public String create(Model model){
-        model.addAttribute("data", new UserCreationForm());
+        model.addAttribute("data", new UserCreationForm());//object which is populated by user input
         return "create";
     }
 
     @PostMapping("/create")
-    public String createSubmit(@ModelAttribute UserCreationForm data, Model model){
-        model.addAttribute("data", data);
+    public String createSubmit(@ModelAttribute UserCreationForm userInput, Model model){
+        model.addAttribute("data", userInput);
 
-        if(data.getUsername() == null || data.getPassword() == null || data.getConfirm() == null){
-            model.addAttribute("msg", "No fields may be blank!");
-            return "create";
+        String msg = UserCreationService.validateCreationFormInput(userInput, userRepository);
+
+        if(msg == "OK"){
+            GexUserDetails user = new GexUserDetails(UserCreationService.createNewUser(userInput, userRepository));
+            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            return "redirect:/";
         }
 
-        if(!data.getConfirm().equals(data.getPassword())){
-            model.addAttribute("msg", "Passwords do not match!");
-            return "create";
-        }
-
-        if(data.getUsername().length() < 4 || data.getUsername().length() > 8){
-            model.addAttribute("msg", "Username is not the correct length! Username must be between 4 and 8 characters long inclusive.");
-            return "create";
-        }
-
-        if(data.getPassword().length() < 8 || data.getPassword().length() > 50){
-            model.addAttribute("msg", "Password is not the correct length! Username must be between 8 and 50 characters long inclusive.");//https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length
-            return "create";
-        }
-
-        //TODO enforce password security
-
-        UserTable userInfo = userRepository.findByUsername(data.getUsername());
-        if(userInfo != null){
-            model.addAttribute("msg", "Username is already taken! Please choose another.");
-            return "create";
-        }
-
-        //all checks passed successfully
-        userInfo = new UserTable(data.getUsername(), encoder.encode(data.getPassword()));
-        userRepository.save(userInfo);
-
-        User user = new User(userInfo);
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        return "redirect:/";
+        model.addAttribute("msg", msg);
+        return "create";
+        
     }
 
     @GetMapping("/account")

@@ -1,4 +1,4 @@
-package com.giftexchange.gex3;
+package com.giftexchange.gex3.gex;
 
 import java.util.ArrayList;
 import java.util.HashMap;

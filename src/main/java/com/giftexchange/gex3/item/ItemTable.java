@@ -1,4 +1,4 @@
-package com.giftexchange.gex3.sql;
+package com.giftexchange.gex3.item;
 
 import java.sql.Date;
 

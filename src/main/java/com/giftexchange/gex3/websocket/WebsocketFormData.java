@@ -1,4 +1,4 @@
-package com.giftexchange.gex3.forms;
+package com.giftexchange.gex3.websocket;
 
 import java.util.List;
 

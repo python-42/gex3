@@ -1,4 +1,4 @@
-package com.giftexchange.gex3;
+package com.giftexchange.gex3.gex;
 
 import java.net.HttpURLConnection;
 import java.net.URL;

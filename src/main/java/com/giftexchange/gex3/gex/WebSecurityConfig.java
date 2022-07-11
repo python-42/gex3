@@ -1,4 +1,4 @@
-package com.giftexchange.gex3;
+package com.giftexchange.gex3.gex;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

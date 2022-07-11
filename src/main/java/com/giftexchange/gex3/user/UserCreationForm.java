@@ -1,4 +1,4 @@
-package com.giftexchange.gex3.forms;
+package com.giftexchange.gex3.user;
 
 public class UserCreationForm {
     

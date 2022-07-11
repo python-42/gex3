@@ -8,8 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.giftexchange.gex3.Constants;
-import com.giftexchange.gex3.sql.UserTable;
+import com.giftexchange.gex3.gex.Constants;
 
 public class User implements UserDetails {
     private UserTable user;

@@ -3,7 +3,7 @@ package com.giftexchange.gex3.util;
 import java.util.List;
 import java.util.Map;
 
-import com.giftexchange.gex3.Constants;
+import com.giftexchange.gex3.gex.Constants;
 
 public class NavblockGenerator {
 

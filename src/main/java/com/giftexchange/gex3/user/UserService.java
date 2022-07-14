@@ -6,8 +6,10 @@ import java.util.regex.Pattern;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.giftexchange.gex3.websocket.WebsocketFormData;
+
 @Service
-public class UserCreationService {
+public class UserService {
     
     private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -44,11 +46,38 @@ public class UserCreationService {
         return "OK";
     }
 
-    
     public static UserTable createNewUser(UserCreationForm userInput, UserRepository userRepository){
         UserTable userInfo = new UserTable(userInput.getUsername(), encoder.encode(userInput.getPassword()));
         userRepository.save(userInfo);
         return userInfo;
+    }
+
+    public static String updatePassword(UserRepository userRepository, WebsocketFormData data, String username){
+
+        String interest = (String)data.getDataPart(0);
+
+        if(interest == null || interest.equals("")){
+            return "Your interest may not be left blank.";
+        }
+
+        if(interest.length() > 100){
+            return "Your interest may only be up to 100 characters long.";
+        }
+
+        Pattern pattern = Pattern.compile("[^a-z, 0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(interest);
+        if(matcher.find()){
+            return "Interest may only contain the following characters: A-Z, 0-9 and ','.";
+        }
+
+        UserTable userInfo = userRepository.findByUsername(username);
+        userInfo.setInterest(interest);
+        userRepository.save(userInfo);
+
+
+
+        //TODO data processing and injection prevention
+        return "OK";
     }
     
 }

@@ -1,5 +1,7 @@
 package com.giftexchange.gex3.user;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +54,7 @@ public class UserService {
         return userInfo;
     }
 
-    public static String updatePassword(UserRepository userRepository, WebsocketFormData data, String username){
+    public static String updateInterest(UserRepository userRepository, WebsocketFormData data, String username){
 
         String interest = (String)data.getDataPart(0);
 
@@ -74,10 +76,45 @@ public class UserService {
         userInfo.setInterest(interest);
         userRepository.save(userInfo);
 
-
-
-        //TODO data processing and injection prevention
         return "OK";
     }
+
+    public static String updatePassword(UserRepository userRepository, WebsocketFormData rawData, String username){
+        UserTable userInfo = userRepository.findByUsername(username);
+
+        HashMap<String, String> data = new HashMap<String, String>();
+
+        data.put("current", (String)rawData.getDataPart(0));
+        data.put("new", (String)rawData.getDataPart(1));
+        data.put("confirm", (String)rawData.getDataPart(2));
+
+        for (Entry<String, String> x : data.entrySet()){
+            if(x.getValue() == null || x.getValue().equals("")){
+                return x.getKey() + " field may not be blank!</div>";    
+            }
+
+            if(x.getValue().length() > 50 || x.getValue().length() < 8 ){
+                return x.getKey().substring(0, 1).toUpperCase() + x.getKey().substring(1) + " password must be between 8 and 50 characters inclusive.</div>";
+            }
+        }
+
+        if(! encoder.matches(data.get("current"), userInfo.getPassword())){
+            return "Current password is incorrect. Please try again.";
+        }
+
+        if(!data.get("new").equals(data.get("confirm"))){
+            return "New passwords do not match!</div>";
+            
+        }
+
+        //checks successful
+        
+        userInfo.setPassword(encoder.encode(data.get("new")));
+        userRepository.save(userInfo);
+
+        return "OK";
+    }
+
+
     
 }

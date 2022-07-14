@@ -31,34 +31,25 @@
 
                 <div class="tab-content">
                     <div class="tab-pane container active" id="profile">
-                        <h1>Profile</h1>
                         <h2>Interest</h2>
-                        <p class="text-dark">What are your hobbies or interests? 100 characters or less.</p>
-
-                        <form method="post" id="interestForm" class="form-group" autocomplete="off">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Interest:</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="What are your interests?"
-                                    name="interest-box" id="interest-box" maxlength="100" required>
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-success border border-dark"
-                                        name="interest_submit">Save</button>
-                                </div>
-                            </div>
-                        </form>
-
-                        <div id="interest-error-text-div"></div>
-
-                        <div class="card m-3">
+                        <div class="card mb-3">
                             <div class="card-body  p-3">
                                 <h4 class="card-title">Current Interest: </h4>
                                 <p class="card-text" id="interest-text" th:text="${interest}"></p>
                             </div>
                         </div>
 
-                        <h3>Birthday</h3>
+                        <form method="post" id="interestForm" class="bg-dark text-primary p-3 " autocomplete="off">
+                            <div class="form-group">
+                                <label for="interest-box">Interest:</label>
+                                <input type="text" class="form-control" placeholder="What are your interests?"name="interest-box" id="interest-box" maxlength="100" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="interest_submit">Submit</button>
+                        </form>
+
+                        <div id="interest-error-text-div"></div>
+
+                        <h2 class="mt-3">Birthday</h2>
                         <div class="card">
                             <div class="card-body p-3">
                                 <h4 class="card-title">Current Birthday:</h4>
@@ -77,7 +68,6 @@
                     </div><!--end of profile-->
 
                     <div class="tab-pane container fade" id="account">
-                        <h4>Account Settings</h4>
                         <h3>Email</h3>
                         <p class="text-dark">Add or change your email address.</p>
 
@@ -96,7 +86,7 @@
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </form>
                         
-                        <h3>Password</h3>
+                        <h3 class="mt-3">Password</h3>
                         <form method="post" class="bg-dark text-primary p-3" autocomplete="off" name="passwordForm" id="passwordForm">
                             <div class="form-group">
                                 <label for="current-box">Current Password:</label>

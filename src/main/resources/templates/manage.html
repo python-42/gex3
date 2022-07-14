@@ -12,12 +12,12 @@
         </div>
         <div class="row">
 
-            <div class = 'col-sm-2 pb-3 bg-secondary'>
+            <div class='col-sm-2 pb-3 bg-secondary'>
                 <h2>Navigation</h2>
-                <div class="btn-group-vertical btn-block" th:utext = "${navblock}"></div>
+                <div class="btn-group-vertical btn-block" th:utext="${navblock}"></div>
             </div>
 
-            <div th:replace = "fragments/logoutModal :: logoutModal"></div>
+            <div th:replace="fragments/logoutModal :: logoutModal"></div>
 
             <div class="col-sm-10 bg-primary">
 
@@ -37,96 +37,112 @@
 
                         <h2>Your Current List</h2>
                         <p><span class='text-danger'>*</span>Format is YYYY-MM-DD</p>
-                        <div class='card-columns' id='items-display'>
+                        <div class='card-columns'>
 
+                            <div class='card' th:each="item : ${items}">
+
+                                <div class='card-header'>
+                                    <h4 class='card-title' th:text="${item.name}"></h4>
+                                </div>
+
+                                <div class='card-body'>
+                                    <a class='card-link' th:text="${item.title}" target='_blank' th:href='${item.url}'></a>
+                                    <p class='card-text' th:text="${item.comment}"></p>
+                                    <p class='card-text' th:text="${item.entryDate}"><span class='text-danger'>*</span></p>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <!--end of Home tab-->
+                            <!--end of Home tab-->
 
-                    <div class="tab-pane container fade" id="add">
-                        <h2>Add Items</h2>
-                        <p class="text-dark">Add items to your list here.</p>
+                            <div class="tab-pane container fade" id="add">
+                                <h2>Add Items</h2>
+                                <p class="text-dark">Add items to your list here.</p>
 
-                        <form method="post" class="bg-dark text-primary p-3 rounded-lg" autocomplete="off"
-                            action="addItems.php" id="addItem">
-                            <!-- this should break any attempted injections-->
-                            <div class="form-group">
-                                <label for="item-box">Item: </label>
-                                <input type="text" onkeyup="testName(this.value)" class="form-control" maxlength="50"
-                                    name="item-box" id="item-box" placeholder="The name of the item you would like"
-                                    required>
+                                <form method="post" class="bg-dark text-primary p-3 rounded-lg" autocomplete="off"
+                                    action="addItems.php" id="addItem">
+                                    <!-- this should break any attempted injections-->
+                                    <div class="form-group">
+                                        <label for="item-box">Item: </label>
+                                        <input type="text" onkeyup="testName(this.value)" class="form-control"
+                                            maxlength="50" name="item-box" id="item-box"
+                                            placeholder="The name of the item you would like" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="url-box">URL: </label>
+                                        <input type="text" class="form-control" maxlength="250" name="url-box"
+                                            id="url-box" placeholder="The link to the item you would like" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="title-box">Title: </label>
+                                        <input type="text" class="form-control" maxlength="20" name="title-box"
+                                            id="title-box" placeholder="How the URL will appear when outputted"
+                                            required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="comment-box">Comment: </label>
+                                        <input type="text" class="form-control" maxlength="250" name="comment-box"
+                                            id="comment-box" placeholder="Any comment about the item" required>
+                                    </div>
+
+                                    <button class="btn btn-primary mt-2" type="submit" name="addBtn" id="addBtn">Add
+                                        Item</button>
+                                    <p class="text-danger" id="nameWarning"></p>
+                                    <p>Please note that only alphanumeric characters are allowed in item inputs. Any
+                                        special
+                                        characters that are present in the item inputs upon submission will be deleted.
+                                    </p>
+                                </form>
+
                             </div>
+                            <!--end of Add tab-->
 
-                            <div class="form-group">
-                                <label for="url-box">URL: </label>
-                                <input type="text" class="form-control" maxlength="250" name="url-box" id="url-box"
-                                    placeholder="The link to the item you would like" required>
+                            <div class="tab-pane container fade" id="edit">
+                                <h2>Edit Items</h2>
+                                <p class="text-dark">Edit items which are already on your list here.</p>
+                                <form method="post" class="bg-dark text-primary p-3 rounded-lg" id="whichForm">
+                                    <div class="form-group">
+                                        <label for="which-box">Select which item you would like to edit:</label>
+                                        <select name="which-box" id="which-box" class="custom-select form-control">
+
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2" name="editSelectBtn"
+                                        id="editSelectBtn">Next</button>
+                                </form>
                             </div>
+                            <!--end of Edit tab-->
 
-                            <div class="form-group">
-                                <label for="title-box">Title: </label>
-                                <input type="text" class="form-control" maxlength="20" name="title-box" id="title-box"
-                                    placeholder="How the URL will appear when outputted" required>
+                            <div class="tab-pane container fade" id="remove">
+                                <h2>Remove Items</h2>
+                                <p class="text-dark">Remove items from your list here.</p>
+                                <form method="post" class="bg-dark text-primary p-3 rounded-lg" id="removeItem">
+                                    <!-- this should break any attempted injections-->
+                                    <div class="form-group">
+                                        <label for="rm-box">Select the item you would like to remove: </label>
+                                        <select name="rm-box" id="rm-box" class="custom-select form-control">
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2" name="rmBtn" id="rmBtn">Remove
+                                        Item</button>
+                                </form>
                             </div>
-
-                            <div class="form-group">
-                                <label for="comment-box">Comment: </label>
-                                <input type="text" class="form-control" maxlength="250" name="comment-box"
-                                    id="comment-box" placeholder="Any comment about the item" required>
-                            </div>
-
-                            <button class="btn btn-primary mt-2" type="submit" name="addBtn" id="addBtn">Add
-                                Item</button>
-                            <p class="text-danger" id="nameWarning"></p>
-                            <p>Please note that only alphanumeric characters are allowed in item inputs. Any special
-                                characters that are present in the item inputs upon submission will be deleted.</p>
-                        </form>
+                            <!--end of Remove tab-->
+                        </div>
 
                     </div>
-                    <!--end of Add tab-->
-
-                    <div class="tab-pane container fade" id="edit">
-                        <h2>Edit Items</h2>
-                        <p class="text-dark">Edit items which are already on your list here.</p>
-                        <form method="post" class="bg-dark text-primary p-3 rounded-lg" id="whichForm">
-                            <div class="form-group">
-                                <label for="which-box">Select which item you would like to edit:</label>
-                                <select name="which-box" id="which-box" class="custom-select form-control">
-
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2" name="editSelectBtn"
-                                id="editSelectBtn">Next</button>
-                        </form>
-                    </div>
-                    <!--end of Edit tab-->
-
-                    <div class="tab-pane container fade" id="remove">
-                        <h2>Remove Items</h2>
-                        <p class="text-dark">Remove items from your list here.</p>
-                        <form method="post" class="bg-dark text-primary p-3 rounded-lg" id="removeItem">
-                            <!-- this should break any attempted injections-->
-                            <div class="form-group">
-                                <label for="rm-box">Select the item you would like to remove: </label>
-                                <select name="rm-box" id="rm-box" class="custom-select form-control">
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2" name="rmBtn" id="rmBtn">Remove
-                                Item</button>
-                        </form>
-                    </div>
-                    <!--end of Remove tab-->
+                    <!--end of large content section-->
                 </div>
-
+                <!--end of row-->
             </div>
-            <!--end of large content section-->
-        </div>
-        <!--end of row-->
-    </div>
-    <!--end of .container-fluid-->
-    <script>
-        document.title = "GEX: Your List";
-    </script>
+            <!--end of .container-fluid-->
+            <script>
+                document.title = "GEX: Your List";
+            </script>
 
 </body>
 

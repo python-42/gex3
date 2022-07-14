@@ -46,10 +46,10 @@ public class UserController {
     public String createSubmit(@ModelAttribute UserCreationForm userInput, Model model){
         model.addAttribute("data", userInput);
 
-        String msg = UserCreationService.validateCreationFormInput(userInput, userRepository);
+        String msg = UserService.validateCreationFormInput(userInput, userRepository);
 
         if(msg == "OK"){
-            GexUserDetails user = new GexUserDetails(UserCreationService.createNewUser(userInput, userRepository));
+            GexUserDetails user = new GexUserDetails(UserService.createNewUser(userInput, userRepository));
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
             return "redirect:/";
@@ -75,12 +75,12 @@ public class UserController {
 
     @MessageMapping("/account/interest")
     @SendTo("/socket/account/interest")
-    public WebsocketServerResponse accountInterestForm(WebsocketFormData data, Authentication auth) throws Exception {
-        UserTable userInfo = userRepository.findByUsername(auth.getName());
-        userInfo.setInterest((String) data.getDataPart(0));
-        userRepository.save(userInfo);
-        //TODO data processing and injection prevention
-        return new WebsocketServerResponse(data.getData());
+    public WebsocketServerResponse accountInterestForm(WebsocketFormData data, Authentication auth) {
+        String msg = UserService.updatePassword(userRepository, data, auth.getName());
+        if(msg == "OK"){
+            return new WebsocketServerResponse(data.getData(), "output", false);
+        }
+        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true);
     }
 
     @MessageMapping("/account/password")
@@ -128,7 +128,7 @@ public class UserController {
 
             rtn.add(Constants.CSS_DISMISSABLE_SUCCESS_MODAL + "Password updated successfully!</div>");
         }
-        return new WebsocketServerResponse(rtn);
+        return new WebsocketServerResponse(rtn, "", false);
     }
 
 }

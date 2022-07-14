@@ -123,15 +123,6 @@
                     <div class="tab-pane container fade" id="danger">
                         <div class="pt-3 pb-3">
                             <h4>Danger</h4>
-                            <p class="text-dark">Be careful when changing these settings!</p>
-                            <h3>Delete Items</h3>
-                            <p class="text-warning">This will delete all items entered into the Gift Exchange
-                                database! This action is irreversible!</p>
-                            <p class="text-dark">You currently have <b id="itemNumberOutput"></b>
-                                items.</p>
-                            <button class="btn btn-danger" id="deleteItemsModal" type="button" data-toggle="modal"
-                                data-target="#deleteItems" title="Delete all items">Delete Items</button>
-                                <p id="deleteItemsOutput"></p>
                             <h3 class="mt-2">Delete Account</h3>
                             <p class="text-warning">This will permanently delete your account and all of your items!
                                 This action is irreversible!</p>
@@ -139,34 +130,6 @@
                                 data-target="#deleteAccount" title="Delete your account">Delete Account</button>
 
                         </div>
-                        <!--start of delete items modal-->
-                        <div class="modal" id="deleteItems">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Delete Items</h4>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <p>Are you sure you would like to delete all of your items? This action is
-                                            irreversible. You will always be able to add new items.</p>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-muted border border-dark"
-                                            data-dismiss="modal">Cancel</button>
-                                        <form method="post" name="deleteForm" id="deleteForm">
-                                            <button type="submit" name="deleteItems" id="deleteItems"
-                                                class="btn btn-danger">Delete Items</button>
-                                        </form>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--end of delete items modal-->
 
                         <!--start of delete account modal-->
                         <div class="modal" id="deleteAccount">

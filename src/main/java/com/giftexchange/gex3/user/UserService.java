@@ -72,15 +72,12 @@ public class UserService {
             return "Interest may only contain the following characters: A-Z, 0-9 and ','.";
         }
 
-        UserTable userInfo = userRepository.findByUsername(username);
-        userInfo.setInterest(interest);
-        userRepository.save(userInfo);
+        userRepository.updateInterestForUsername(interest, username);
 
         return "OK";
     }
 
     public static String updatePassword(UserRepository userRepository, WebsocketFormData rawData, String username){
-        UserTable userInfo = userRepository.findByUsername(username);
 
         HashMap<String, String> data = new HashMap<String, String>();
 
@@ -98,7 +95,7 @@ public class UserService {
             }
         }
 
-        if(! encoder.matches(data.get("current"), userInfo.getPassword())){
+        if(! encoder.matches(data.get("current"), userRepository.getPasswordForUsername(username))){
             return "Current password is incorrect. Please try again.";
         }
 
@@ -108,9 +105,7 @@ public class UserService {
         }
 
         //checks successful
-        
-        userInfo.setPassword(encoder.encode(data.get("new")));
-        userRepository.save(userInfo);
+        userRepository.updatePasswordForUsername(encoder.encode(data.get("new")), username);
 
         return "OK";
     }

@@ -54,11 +54,13 @@ public class UserController {
 
     @GetMapping("/account")
     public String account(Model model, Authentication auth){
+        String username = auth.getName();
+
         model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Account"));
-        UserTable userInfo = userRepository.findByUsername(auth.getName());
-        model.addAttribute("interest", userInfo.getInterest());
-        if(userInfo.getEmailEnabled()){
-            model.addAttribute("email", userInfo.getEmail());
+        model.addAttribute("interest", userRepository.getInterestForUsername(username));
+
+        if(userRepository.getEmailEnabledForUsername(username)){
+            model.addAttribute("email", userRepository.getEmailForUsername(username));
         }else{
             model.addAttribute("email", "Email disabled.");
         }
@@ -77,7 +79,7 @@ public class UserController {
 
     @MessageMapping("/account/password")
     @SendTo("/socket/account/password")
-    public WebsocketServerResponse accountPasswordForm(WebsocketFormData rawData, Authentication auth) throws Exception {
+    public WebsocketServerResponse accountPasswordForm(WebsocketFormData rawData, Authentication auth) {
         String msg = UserService.updatePassword(userRepository, rawData, auth.getName());
         if(msg.equals("OK")){
             return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_SUCCESS_MODAL + "Password updated successfully</div>", "output", true);

@@ -11,31 +11,31 @@ public interface UserRepository extends CrudRepository<UserTable, Integer> {
 
     //password
     @Modifying
-    @Query(value = "update user set password = :password where username = :username")
+    @Query(value = "update user u set u.password = :password where u.username = :username")
     int updatePasswordForUsername(@Param("password")String password, @Param("username")String username);
 
-    @Query(value = "select password from user where username = :username")
+    @Query(value = "select u.password from user u where u.username = :username")
     String getPasswordForUsername(@Param("username")String usernmae);
 
     //enabled
     @Modifying
-    @Query(value = "update user set enabled = :enabled where username = :username")
+    @Query(value = "update user u set u.enabled = :enabled where u.username = :username")
     int updateEnabledForUsername(@Param("enabled")Boolean enabled, @Param("username")String usernmae);
 
-    @Query(value = "select enabled from user where username = :username")
+    @Query(value = "select u.enabled from user u where u.username = :username")
     String getEnabledForUsername(@Param("username")String usernmae);
 
     //interest
     @Modifying
-    @Query(value = "update user set interest = :interest where username = :username")
+    @Query(value = "update user u set u.interest = :interest where u.username = :username")
     int updateInterestForUsername(@Param("interest")String interest, @Param("username")String usernmae);
 
-    @Query(value = "select interest from user where username = :username")
+    @Query(value = "select u.interest from user u where u.username = :username")
     String getInterestForUsername(@Param("username")String usernmae);
 
     //email
     @Modifying
-    @Query(value = "update user set email = :email where username = :username")
+    @Query(value = "update user u set u.email = :email where u.username = :username")
     int updateEmailForUsername(@Param("email")String email, @Param("username")String usernmae);
 
     @Query(value = "select email from user where username = :username")
@@ -43,9 +43,9 @@ public interface UserRepository extends CrudRepository<UserTable, Integer> {
 
     //email enabled
     @Modifying
-    @Query(value = "update user set email_enabled = :emailEnabled where username = :username")
+    @Query(value = "update user u set u.emailEnabled = :emailEnabled where u.username = :username")
     int updateEmailEnabledForUsername(@Param("emailEnabled")boolean emailEnabled, @Param("username")String usernmae);
 
-    @Query(value = "select email_enabled from user where username = :username")
+    @Query(value = "select u.emailEnabled from user u where u.username = :username")
     boolean getEmailEnabledForUsername(@Param("username")String usernmae);
 }

@@ -18,7 +18,7 @@ public class ItemTable {
     @Column(nullable = false)
     private String owner;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
     
     @Column(nullable = false)

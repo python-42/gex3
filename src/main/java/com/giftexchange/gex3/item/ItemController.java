@@ -22,10 +22,12 @@ public class ItemController {
         return "manage";
     }
 
-    @GetMapping("/lists")
-    public String lists(Model model){
-        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Lists"));
-        return "lists";
+    @GetMapping("/users")
+    public String lists(Model model, Authentication auth){
+        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Users"));
+        
+        model.addAttribute("users", itemRepository.findAllDistinctOwnersExcept(auth.getName()));
+        return "users";
     }
 
 }

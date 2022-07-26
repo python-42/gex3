@@ -26,8 +26,8 @@ public final class Constants {
         NAVBLOCK_MAP.get(0).put("url", "/account");
 
         NAVBLOCK_MAP.add(new HashMap<String, String>());
-        NAVBLOCK_MAP.get(1).put("name", "Lists");
-        NAVBLOCK_MAP.get(1).put("url", "/lists");
+        NAVBLOCK_MAP.get(1).put("name", "Users");
+        NAVBLOCK_MAP.get(1).put("url", "/users");
 
         NAVBLOCK_MAP.add(new HashMap<String, String>());
         NAVBLOCK_MAP.get(2).put("name", "Your List");

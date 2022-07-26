@@ -63,4 +63,21 @@ public class gexErrorController implements ErrorController {
         
         return "error";
     }
+
+    public enum logLevel{
+        INFO,
+        WARN,
+        ERROR
+    }
+
+    public static void logServerStart(logLevel level){
+        if(level == logLevel.INFO){
+            logger.info("GEX3 Server started on " + new Date().toString());
+        }else if(level == logLevel.WARN){
+            logger.warn("GEX3 Server started on " + new Date().toString());
+        }else{
+            logger.error("GEX3 Server started on " + new Date().toString());
+        }
+        
+    }
 }

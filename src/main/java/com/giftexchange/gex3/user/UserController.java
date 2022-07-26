@@ -52,6 +52,13 @@ public class UserController {
         
     }
 
+    @GetMapping("/users")
+    public String users(Model model, Authentication auth){
+        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Users"));
+        model.addAttribute("users", userRepository.findAllUsersExcept(auth.getName()));
+        return "users";
+    }
+
     @GetMapping("/account")
     public String account(Model model, Authentication auth){
         String username = auth.getName();

@@ -27,7 +27,7 @@
                         </div>
                         <div class="card-body">
                             <p class='card-text' th:text="|Interest: ${user.interest}|"></p>
-                            <a target="_blank" class="btn btn-primary" th:href="temp"
+                            <a class="btn btn-primary" th:href="|users/${user.username}|"
                                 th:text="|View ${user.username}s Items|"></a>
                         </div>
                     </div>

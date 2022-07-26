@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="fragments/header :: header">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron text-center m-2">
+            <h1 class="jumbotron-heading" th:text="${owner}"></h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 pb-3 bg-secondary">
+                <h2>Navigation</h2>
+                <div class="btn-group-vertical btn-block" th:utext="${navblock}"></div>
+            </div>
+
+            <div th:replace="fragments/logoutModal :: logoutModal"></div>
+            <!--end of nav-->
+            <div class="col-sm-10 bg-primary">
+                <div class="text-info bg-light border border-danger rounded-sm w-25 mx-auto" style="text-align:center" th:if="${items} == null">This user has no items.</div>
+                <div class="card-columns mt-3">
+
+                    <div class="card" th:each="item : ${items}">
+                        <div class="card-header">
+                            <h4 class="card-title" th:text="${item.name}"></h4>
+                        </div>
+                        <div class="card-body">
+                            <a target="_blank" class="card-link" th:href="${item.url}"
+                            th:text="${item.title}"></a>
+                            <p class='card-text' th:text="|Comment: ${item.comment}|"></p>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!--end of main content area-->
+
+    </div>
+    <!--end of .row-->
+
+    </div>
+    <!--end of .container-fluid-->
+    <script>
+        document.title = "GEX: Users";
+    </script>
+    </div>
+</body>
+
+</html>

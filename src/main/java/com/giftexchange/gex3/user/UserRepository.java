@@ -9,6 +9,9 @@ public interface UserRepository extends CrudRepository<UserTable, Integer> {
 
     UserTable findByUsername(String username);
 
+    @Query(value = "SELECT u FROM user u WHERE NOT username = :username")
+    Iterable<UserTable> findAllUsersExcept(@Param("username")String username);
+
     //password
     @Modifying
     @Query(value = "update user u set u.password = :password where u.username = :username")

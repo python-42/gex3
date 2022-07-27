@@ -14,7 +14,7 @@ public class WebsocketFormData {
         return data.get(pos);
     }
 
-    public void setInterest(List<Object> data){
+    public void setData(List<Object> data){
         this.data = data;
     }
 }

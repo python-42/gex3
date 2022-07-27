@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Navbar Fragment</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" th:fragment = "navbar">
+                    <a class="navbar-brand" href="/">
+                        <img th:src="@{favicon.ico}" class="rounded-circle" alt="Logo" style="width:30px;">
+                    </a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account">Account</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users">Users</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Your List</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <form class="form-inline">
+                            <input class="form-control mr-2" type="text" placeholder="Enter a username...">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </form>
+                        <li class="nav-item ml-2">
+                            <a class="nav-link" href="/login?logout">Logout</a>
+                        </li>
+                    </ul>
+            </nav>
+        </div>
+    </body>
+</html>

@@ -1,148 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="EN">
 
-<head th:insert="fragments/header :: header">
-    <title>Manage Your List</title>
+<head>
+    <th:block th:insert="fragments/header :: header"></th:block>
+    <title>GEX: Your List</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="jumbotron text-center m-2">
-            <h1 class="jumbotron-heading">Your List</h1>
-        </div>
-        <div class="row">
+    <div class="container-fluid text-light">
+        <th:block th:insert="fragments/navbar :: navbar"></th:block>
 
-            <div class='col-sm-2 pb-3 bg-secondary'>
-                <h2>Navigation</h2>
-                <div class="btn-group-vertical btn-block" th:utext="${navblock}"></div>
-            </div>
+        <h1 style="text-align:center;">Your List</h1>
+        <p>Click an item to edit it. Hover over the URL title to see the destination URL.</p>
+        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#formModal" data-backdrop="static">Add Item</button>
 
-            <div th:replace="fragments/logoutModal :: logoutModal"></div>
+        <table class="table table-dark table-hover mt-6">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>URL Title</th>
+                    <th>Comment</th>
+                    <th>Entry Date</th>
+                    <!--<th></th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr  onclick="openModal(this.id)" th:each="item : ${items}" th:id="${item.id}">
+                    <td th:text="${item.name}">NAME</td>
+                    <td><a th:text="${item.title}" th:href="${item.url}" data-toggle="tooltip"
+                            th:title="${item.url}"></a></td>
+                    <td th:text="${item.comment}">COMMENT</td>
+                    <td th:text="${item.entryDate}">ENTRY DATE</td>
+                    <!--<td class="material-symbols-outlined">delete</td>-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-            <div class="col-sm-10 bg-primary">
-
-                <ul class="nav nav-tabs bg-white border border-dark">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#add">Add Items</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#edit">Edit Items</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#remove">Remove Items</a></li>
-                </ul>
-
-                <div class="tab-content">
-                    <div class="tab-pane container active" id="home">
-                        <h2>Manage Your List</h2>
-                        <p class="text-dark">Edit your list here. Click the corresponding tabs to either add, edit,
-                            or delete items from your list.
-                        </p>
-
-                        <h2>Your Current List</h2>
-                        <p><span class='text-danger'>*</span>Format is YYYY-MM-DD</p>
-                        <div class='card-columns'>
-
-                            <div class='card' th:each="item : ${items}">
-
-                                <div class='card-header'>
-                                    <h4 class='card-title' th:text="${item.name}"></h4>
-                                </div>
-
-                                <div class='card-body'>
-                                    <a class='card-link' th:text="${item.title}" target='_blank' th:href='${item.url}'></a>
-                                    <p class='card-text' th:text="${item.comment}"></p>
-                                    <p class='card-text' th:text="${item.entryDate}"><span class='text-danger'>*</span></p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                            <!--end of Home tab-->
-
-                            <div class="tab-pane container fade" id="add">
-                                <h2>Add Items</h2>
-                                <p class="text-dark">Add items to your list here.</p>
-
-                                <form method="post" class="bg-dark text-primary p-3 rounded-lg" autocomplete="off"
-                                    action="addItems.php" id="addItem">
-                                    <!-- this should break any attempted injections-->
-                                    <div class="form-group">
-                                        <label for="item-box">Item: </label>
-                                        <input type="text" onkeyup="testName(this.value)" class="form-control"
-                                            maxlength="50" name="item-box" id="item-box"
-                                            placeholder="The name of the item you would like" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="url-box">URL: </label>
-                                        <input type="text" class="form-control" maxlength="250" name="url-box"
-                                            id="url-box" placeholder="The link to the item you would like" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="title-box">Title: </label>
-                                        <input type="text" class="form-control" maxlength="20" name="title-box"
-                                            id="title-box" placeholder="How the URL will appear when outputted"
-                                            required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="comment-box">Comment: </label>
-                                        <input type="text" class="form-control" maxlength="250" name="comment-box"
-                                            id="comment-box" placeholder="Any comment about the item" required>
-                                    </div>
-
-                                    <button class="btn btn-primary mt-2" type="submit" name="addBtn" id="addBtn">Add
-                                        Item</button>
-                                    <p class="text-danger" id="nameWarning"></p>
-                                    <p>Please note that only alphanumeric characters are allowed in item inputs. Any
-                                        special
-                                        characters that are present in the item inputs upon submission will be deleted.
-                                    </p>
-                                </form>
-
-                            </div>
-                            <!--end of Add tab-->
-
-                            <div class="tab-pane container fade" id="edit">
-                                <h2>Edit Items</h2>
-                                <p class="text-dark">Edit items which are already on your list here.</p>
-                                <form method="post" class="bg-dark text-primary p-3 rounded-lg" id="whichForm">
-                                    <div class="form-group">
-                                        <label for="which-box">Select which item you would like to edit:</label>
-                                        <select name="which-box" id="which-box" class="custom-select form-control">
-
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mb-2" name="editSelectBtn"
-                                        id="editSelectBtn">Next</button>
-                                </form>
-                            </div>
-                            <!--end of Edit tab-->
-
-                            <div class="tab-pane container fade" id="remove">
-                                <h2>Remove Items</h2>
-                                <p class="text-dark">Remove items from your list here.</p>
-                                <form method="post" class="bg-dark text-primary p-3 rounded-lg" id="removeItem">
-                                    <!-- this should break any attempted injections-->
-                                    <div class="form-group">
-                                        <label for="rm-box">Select the item you would like to remove: </label>
-                                        <select name="rm-box" id="rm-box" class="custom-select form-control">
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mb-2" name="rmBtn" id="rmBtn">Remove
-                                        Item</button>
-                                </form>
-                            </div>
-                            <!--end of Remove tab-->
-                        </div>
-
-                    </div>
-                    <!--end of large content section-->
+    <div class="modal" id="formModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-light">
+                <!--header-->
+                <div class="modal-header border-dark">
+                    <h1 class="modal-title">Add Item</h1>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <!--end of row-->
+
+                <!--body-->
+                <div class="modal-body">
+                    <form method="post" id="itemForm">
+
+                        <div class="form-group">
+                            <label for="item">Item: </label>
+                            <input type="text" class="form-control" maxlength="255"
+                                name="item" id="item" placeholder="Item name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="url">URL: </label>
+                            <input type="text" class="form-control" maxlength="255" name="url" id="url"
+                                placeholder="The link to the item you would like" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Title: </label>
+                            <input type="text" class="form-control" maxlength="255" name="title" id="title"
+                                placeholder="How the URL will appear when outputted" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment">Comment: </label>
+                            <input type="text" class="form-control" maxlength="255" name="comment" id="comment"
+                                placeholder="Any comment" required>
+                        </div>
+
+                        <button class="btn btn-success mt-2" type="submit" name="addBtn" id="addBtn">Save</button>
+                    </form>
+                </div>
+
+                <!--footer-->
+                <div class="modal-footer border-dark">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
-            <!--end of .container-fluid-->
-            <script>
-                document.title = "GEX: Your List";
-            </script>
+        </div>
+    </div>
+
+    <script>
+        //inits all tooltips on the page
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function openModal(id){
+            document.forms["itemForm"]["item"].value = "";
+            document.forms["itemForm"]["url"].value = "";
+            document.forms["itemForm"]["value"].value = "";
+            document.forms["itemForm"]["comment"].value = "";
+
+            $("#formModal").modal({backdrop: "static"});
+        }
+    </script>
 
 </body>
 

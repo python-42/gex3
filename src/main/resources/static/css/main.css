@@ -8,3 +8,7 @@ h1 {
     font-family: 'Courier New', Courier, monospace;
     font-size: 3rem;
 }
+
+.modal-content {
+    background-color: dimgray;
+}

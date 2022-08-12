@@ -35,6 +35,12 @@ export default class WebsocketForm {
         var message = JSON.parse(data).data;
         var mode = JSON.parse(data).mode;
         var append = JSON.parse(data).append;
+        var remove = JSON.parse(data).remove;
+        console.log("Remove:");
+        console.log(remove);
+        if(remove!=null && remove!=""){
+            document.getElementById(remove).remove();
+        }
         if(mode == "error"){
             if(append){
                 for (var x in message){

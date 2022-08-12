@@ -16,9 +16,7 @@ public final class Constants {
     public static final String CSS_DISMISSABLE_ERROR_MODAL = "<div class='alert alert-danger alert-dismissible mt-3'><button type='button' class='close' data-dismiss='alert'>&times;</button>";
 
     //HTML Snippets
-    public static final String HTML_SELF_ITEM_CARD = "<div class='card'><div class='card-header'><h4 class='card-title'>{name}</h4></div><div class='card-body'><a class='card-link' target='_blank' href='{url}'>{title}</a><p class='card-text'>{comment}</p><p class='card-text'>{entryDate}<span class='text-danger'>*</span></p></div</div>";
-    public static final String HTML_UNBOUGHT_ITEM_CARD = "<div class='card'><div class='card-header'><h4 class='card-title'>{name}</h4></div><div class='card-body'><a class='card-link' target='_blank' href='{url}'>{title}</a><p class='card-text'>{comment}</p><p class='card-text'>{entryDate}<span class='text-danger'>*</span></p><p class='card-text'>This item has not been bought</p><button class='btn btn-primary'>Mark Item As Bought</button></div></div>";
-    public static final String HTML_BOUGHT_ITEM_CARD = "<div class='card'><div class='card-header'><h4 class='card-title'>{name}</h4></div><div class='card-body'><a class='card-link' target='_blank' href='{url}'>{title}</a><p class='card-text'>{comment}</p><p class='card-text'>{entryDate}<span class='text-danger'>*</span></p><p class='card-text text-danger'>This item has been bought by {boughtBy}</p></div></div>";
+    public static final String HTML_SELF_ITEM_TABLE_ROW = "<tr onclick='openModal(this.id)' id='<ITEM_ID>'><td id='NAME<ITEM_ID>'><NAME></td><td><a href='<URL>' data-toggle='tooltip' id='TITLE<ITEM_ID>'><TITLE></a></td><td id='COMMENT<ITEM_ID>'><COMMENT></td><td id='DATE<ITEM_ID>'><ENTRY_DATE></td></tr>";
 
     public static void initNavblockConstant(){
         NAVBLOCK_MAP.add(new HashMap<String, String>());

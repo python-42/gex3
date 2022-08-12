@@ -79,9 +79,9 @@ public class UserController {
     public WebsocketServerResponse accountInterestForm(WebsocketFormData data, Authentication auth) {
         String msg = UserService.updateInterest(userRepository, data, auth.getName());
         if(msg.equals("OK")){
-            return new WebsocketServerResponse(data.getData(), "output", false);
+            return new WebsocketServerResponse(data.getData(), "output", false, null);
         }
-        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true);
+        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true, null);
     }
 
     @MessageMapping("/account/password")
@@ -89,9 +89,9 @@ public class UserController {
     public WebsocketServerResponse accountPasswordForm(WebsocketFormData rawData, Authentication auth) {
         String msg = UserService.updatePassword(userRepository, rawData, auth.getName());
         if(msg.equals("OK")){
-            return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_SUCCESS_MODAL + "Password updated successfully</div>", "output", true);
+            return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_SUCCESS_MODAL + "Password updated successfully</div>", "output", true, null);
         }
-        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true);
+        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true, null);
     }
 
 }

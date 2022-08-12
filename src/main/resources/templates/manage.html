@@ -9,10 +9,13 @@
 <body>
     <div class="container-fluid text-light">
         <th:block th:insert="fragments/navbar :: navbar"></th:block>
+        <div th:replace="fragments/header :: websocket"></div>
+        <script type=module th:src="@{/js/manage.js}"></script>
 
         <h1 style="text-align:center;">Your List</h1>
         <p>Click an item to edit it. Hover over the URL title to see the destination URL.</p>
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#formModal" data-backdrop="static">Add Item</button>
+        <div id="error"></div>
 
         <table class="table table-dark table-hover mt-6">
             <thead>
@@ -24,13 +27,13 @@
                     <!--<th></th>-->
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tableBody">
                 <tr  onclick="openModal(this.id)" th:each="item : ${items}" th:id="${item.id}">
-                    <td th:text="${item.name}">NAME</td>
+                    <td th:text="${item.name}" th:id="|NAME${item.id}|">NAME</td>
                     <td><a th:text="${item.title}" th:href="${item.url}" data-toggle="tooltip"
-                            th:title="${item.url}"></a></td>
-                    <td th:text="${item.comment}">COMMENT</td>
-                    <td th:text="${item.entryDate}">ENTRY DATE</td>
+                            th:title="${item.url}" th:id="|TITLE${item.id}|"></a></td>
+                    <td th:text="${item.comment}" th:id="|COMMENT${item.id}|">COMMENT</td>
+                    <td th:text="${item.entryDate}" th:id="|DATE${item.id}|">ENTRY DATE</td>
                     <!--<td class="material-symbols-outlined">delete</td>-->
                 </tr>
             </tbody>
@@ -74,6 +77,8 @@
                                 placeholder="Any comment" required>
                         </div>
 
+                        <input id="id" type="text" hidden><!--TODO fix this bullshit-->
+
                         <button class="btn btn-success mt-2" type="submit" name="addBtn" id="addBtn">Save</button>
                     </form>
                 </div>
@@ -93,10 +98,11 @@
         });
 
         function openModal(id){
-            document.forms["itemForm"]["item"].value = "";
-            document.forms["itemForm"]["url"].value = "";
-            document.forms["itemForm"]["value"].value = "";
-            document.forms["itemForm"]["comment"].value = "";
+            document.forms["itemForm"]["id"].value = id;
+            document.forms["itemForm"]["item"].value = document.getElementById("NAME"+id).innerText;
+            document.forms["itemForm"]["url"].value = document.getElementById("TITLE"+id).attributes.getNamedItem("href").value;
+            document.forms["itemForm"]["title"].value = document.getElementById("TITLE"+id).innerText;
+            document.forms["itemForm"]["comment"].value = document.getElementById("COMMENT"+id).innerText;
 
             $("#formModal").modal({backdrop: "static"});
         }

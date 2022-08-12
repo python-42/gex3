@@ -7,21 +7,24 @@ public class WebsocketServerResponse {
     private List<Object> data;
     private String mode;
     private boolean append;
+    private String remove;
 
 
     public WebsocketServerResponse(){}
 
-    public WebsocketServerResponse(List<Object> data, String mode, boolean append) {
+    public WebsocketServerResponse(List<Object> data, String mode, boolean append, String remove) {
         this.data = data;
         this.mode = mode;
         this.append = append;
+        this.remove = remove;
     }
 
-    public WebsocketServerResponse(Object data, String mode, boolean append){
+    public WebsocketServerResponse(Object data, String mode, boolean append, String remove){
         this.data = new ArrayList<Object>();
         this.data.add(data);
         this.mode = mode;
         this.append = append;
+        this.remove = remove;
     }
 
     public List<Object> getData(){
@@ -42,5 +45,9 @@ public class WebsocketServerResponse {
 
     public boolean getAppend() {
         return this.append;
+    }
+
+    public String getRemove(){
+        return remove;
     }
 }

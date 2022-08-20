@@ -23,7 +23,6 @@
                     <th>Item Name</th>
                     <th>URL Title</th>
                     <th>Comment</th>
-                    <th>Entry Date</th>
                     <!--<th></th>-->
                 </tr>
             </thead>
@@ -33,7 +32,6 @@
                     <td><a th:text="${item.title}" th:href="${item.url}" data-toggle="tooltip"
                             th:title="${item.url}" th:id="|TITLE${item.id}|"></a></td>
                     <td th:text="${item.comment}" th:id="|COMMENT${item.id}|">COMMENT</td>
-                    <td th:text="${item.entryDate}" th:id="|DATE${item.id}|">ENTRY DATE</td>
                     <!--<td class="material-symbols-outlined">delete</td>-->
                 </tr>
             </tbody>

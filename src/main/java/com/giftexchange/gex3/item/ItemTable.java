@@ -1,7 +1,5 @@
 package com.giftexchange.gex3.item;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,10 +34,6 @@ public class ItemTable {
     @Column()
     private String boughtBy;
 
-    @Column(nullable = false)
-    private Date entryDate;
-    
-
     public ItemTable(){}
 
     public ItemTable(String owner, String name, String url, String title, String comment){
@@ -49,7 +43,6 @@ public class ItemTable {
         this.title = title;
         this.comment = comment;
         this.bought = false;
-        this.entryDate = new Date();
     }
 
     public Integer getId() {
@@ -118,14 +111,6 @@ public class ItemTable {
 
     public void setBoughtBy(String boughtBy) {
         this.boughtBy = boughtBy;
-    }
-
-    public String getEntryDateAsString(){
-        return this.entryDate.toString();
-    }
-
-    public Date getEntryDate() {
-        return this.entryDate;
     }
 
 }

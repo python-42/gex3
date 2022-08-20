@@ -1,5 +1,7 @@
 package com.giftexchange.gex3.user;
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -19,6 +21,18 @@ import com.giftexchange.gex3.websocket.WebsocketServerResponse;
 
 @Controller
 public class UserController {
+
+    private class UserInfoJoined {
+        public String username;
+        public String interest;
+        public int itemCount;
+
+        UserInfoJoined(String username, String interest, int itemCount){
+            this.username = username;
+            this.interest = interest;
+            this.itemCount = itemCount;
+        }
+    }
 
     @Autowired
     private UserRepository userRepository;
@@ -54,8 +68,12 @@ public class UserController {
 
     @GetMapping("/users")
     public String users(Model model, Authentication auth){
-        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Users"));
-        model.addAttribute("users", userRepository.findAllUsersExcept(auth.getName()));
+        LinkedList<UserInfoJoined> attr = new LinkedList<UserInfoJoined>(); 
+        for (UserTable x : userRepository.findAllUsersExcept(auth.getName())){
+            attr.add(new UserInfoJoined(x.getUsername(), x.getInterest(), userRepository.itemCountForOwner(x.getUsername())));
+        }
+
+        model.addAttribute("users", attr);
         return "users";
     }
 

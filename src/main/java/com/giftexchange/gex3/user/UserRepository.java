@@ -9,6 +9,9 @@ public interface UserRepository extends CrudRepository<UserTable, Integer> {
 
     UserTable findByUsername(String username);
 
+    @Query(value = "SELECT COUNT(*) FROM item i WHERE owner = :owner")
+    Integer itemCountForOwner(@Param("owner") String owner);
+
     @Query(value = "SELECT u FROM user u WHERE NOT username = :username")
     Iterable<UserTable> findAllUsersExcept(@Param("username")String username);
 

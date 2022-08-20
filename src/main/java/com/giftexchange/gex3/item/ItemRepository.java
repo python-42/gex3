@@ -11,6 +11,9 @@ public interface ItemRepository extends CrudRepository<ItemTable, Integer> {
 
     ItemTable findByName(String name);
 
+    @Query(value = "SELECT COUNT(name) FROM item i WHERE owner = :owner")
+    Integer itemCountForOwner(@Param("owner") String owner);
+
     @Query(value = "SELECT i FROM item i WHERE i.owner = :owner")
     Iterable<ItemTable> findAllWithOwner(@Param("owner") String owner);
 

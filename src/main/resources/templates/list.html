@@ -1,54 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="EN">
 
-<head th:insert="fragments/header :: header">
+<head>
+    <th:block th:insert="fragments/header :: header"></th:block>
+    <title>GEX: Items</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="jumbotron text-center m-2">
-            <h1 class="jumbotron-heading" th:text="${owner}"></h1>
+    <div class="container-fluid text-light">
+        <th:block th:insert="fragments/navbar :: navbar"></th:block>
+
+        <h1 style="text-align:center;" th:text = "${owner}">USERNAME</h1>
+        <p th:text = "${itemCount} == 0 ? 'This person has no items.' : ${itemCount} + ' items.'"></p>
+        <div style="overflow-x:auto;">
+            <table class="table table-dark table-hover mt-6">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th>Comment</th>
+                        <th>Bought By</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr th:each="item : ${items}" th:id="${item.id}">
+                        <td th:text="${item.name}">NAME</td>
+                        <td><a th:text="${item.title}" th:href="${item.url}" data-toggle="tooltip"
+                            th:title="${item.url}"></a></td>
+                        <td th:text="${item.comment}">COMMENT</td>
+                        <td th:text = "${item.bought} ? ${item.boughtBy} : 'Not bought'">BOUGHT</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="row">
-            <div class="col-sm-2 pb-3 bg-secondary">
-                <h2>Navigation</h2>
-                <div class="btn-group-vertical btn-block" th:utext="${navblock}"></div>
-            </div>
-
-            <div th:replace="fragments/logoutModal :: logoutModal"></div>
-            <!--end of nav-->
-            <div class="col-sm-10 bg-primary">
-                <div class="text-info bg-light border border-danger rounded-sm w-25 mx-auto" style="text-align:center" th:if="${items} == null">This user has no items.</div>
-                <div class="card-columns mt-3">
-
-                    <div class="card" th:each="item : ${items}">
-                        <div class="card-header">
-                            <h4 class="card-title" th:text="${item.name}"></h4>
-                        </div>
-                        <div class="card-body">
-                            <a target="_blank" class="card-link" th:href="${item.url}"
-                            th:text="${item.title}"></a>
-                            <p class='card-text' th:text="|Comment: ${item.comment}|"></p>
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        <!--end of main content area-->
-
     </div>
-    <!--end of .row-->
 
-    </div>
-    <!--end of .container-fluid-->
     <script>
-        document.title = "GEX: Users";
+        //inits all tooltips on the page
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
-    </div>
 </body>
 
 </html>

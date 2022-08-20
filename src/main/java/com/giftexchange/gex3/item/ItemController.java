@@ -50,8 +50,8 @@ public class ItemController {
         if(owner.equals(auth.getName())){
             return "redirect:/";
         }
-        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, ""));
         model.addAttribute("owner", owner);
+        model.addAttribute("itemCount", itemRepository.itemCountForOwner(owner));
         model.addAttribute("items", itemRepository.findAllWithOwner(owner));
         return "list";
     }

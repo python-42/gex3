@@ -12,3 +12,19 @@ h1 {
 .modal-content {
     background-color: dimgray;
 }
+
+/* Works on Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: white gray;
+  }
+  
+  /* Works on Chrome, Edge, and Safari */
+  
+  *::-webkit-scrollbar-track {
+    background: gray;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: white;
+  }

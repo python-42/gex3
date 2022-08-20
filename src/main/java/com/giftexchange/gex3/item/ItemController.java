@@ -42,7 +42,7 @@ public class ItemController {
                 "output", true, (String)data.getDataPart(0)
             );
         }
-        return new WebsocketServerResponse((Object) msg, "error", false, null);
+        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg.substring(0, 1).toUpperCase() + msg.substring(1) + "</div>", "error", true, null);
     }
 
     @GetMapping("/users/{owner}")

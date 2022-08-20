@@ -17,6 +17,9 @@ public interface ItemRepository extends CrudRepository<ItemTable, Integer> {
     @Query(value = "SELECT DISTINCT i.owner FROM item i WHERE NOT i.owner = :owner")
     Iterable<ItemTable> findAllDistinctOwnersExcept(@Param("owner") String owner);
 
+    @Query(value = "SELECT i.owner FROM item i WHERE i.id = :id")
+    String itemOwnerById(@Param("id") Integer id);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE item i SET name = :name, url = :url, title = :title, comment = :comment WHERE id = :id")

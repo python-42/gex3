@@ -1,10 +1,11 @@
 package com.giftexchange.gex3.item;
 
 import java.util.HashMap;
-
-import org.springframework.stereotype.Service;
+import java.util.Map.Entry;
 
 import com.giftexchange.gex3.websocket.WebsocketFormData;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class ItemService {
@@ -18,13 +19,26 @@ public class ItemService {
         dataMap.put("title", (String)data.getDataPart(3));
         dataMap.put("comment", (String)data.getDataPart(4));
 
-        //TODO checks
+        for (Entry<String, String> x : dataMap.entrySet()){
+            if(x.getValue() == null || x.getValue() == ""){
+                return x.getKey() + " may not be blank.";
+            }
+
+            if(x.getValue().length() > 255){
+                return x.getKey() + " may not be longer than 255 characters.";
+            }
+        }
 
         //all checks passed
         if(id.equals("")){
             itemRepository.save(new ItemTable(name, dataMap.get("name"), dataMap.get("url"), dataMap.get("title"), dataMap.get("comment")));
         }else{
-            itemRepository.updateSelfItemForID(dataMap.get("name"), dataMap.get("url"), dataMap.get("title"), dataMap.get("comment"), Integer.valueOf(id));
+            if(itemRepository.itemOwnerById(Integer.valueOf(id)) == name){
+                itemRepository.updateSelfItemForID(dataMap.get("name"), dataMap.get("url"), dataMap.get("title"), dataMap.get("comment"), Integer.valueOf(id));
+            }else{
+                return "An error occured: Item ID and owner mismatch. Try reloading the page.";
+            }
+            
         }
         return "OK";
     }

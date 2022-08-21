@@ -9,6 +9,11 @@ h1 {
     font-size: 3rem;
 }
 
+hr {
+  height:2px;
+  background-color:#f8f9fa;
+}
+
 .modal-content {
     background-color: dimgray;
 }

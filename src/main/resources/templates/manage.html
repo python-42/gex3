@@ -105,6 +105,10 @@
 
             $("#formModal").modal({backdrop: "static"});
         }
+
+        $('#formModal').on('hidden.bs.modal', function (e) {
+            document.getElementById("itemForm").reset();
+        });
     </script>
 
 </body>

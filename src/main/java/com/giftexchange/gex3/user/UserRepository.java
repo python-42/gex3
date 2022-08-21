@@ -23,14 +23,6 @@ public interface UserRepository extends CrudRepository<UserTable, Integer> {
     @Query(value = "select u.password from user u where u.username = :username")
     String getPasswordForUsername(@Param("username")String usernmae);
 
-    //enabled
-    @Modifying
-    @Query(value = "update user u set u.enabled = :enabled where u.username = :username")
-    int updateEnabledForUsername(@Param("enabled")Boolean enabled, @Param("username")String usernmae);
-
-    @Query(value = "select u.enabled from user u where u.username = :username")
-    String getEnabledForUsername(@Param("username")String usernmae);
-
     //interest
     @Modifying
     @Query(value = "update user u set u.interest = :interest where u.username = :username")

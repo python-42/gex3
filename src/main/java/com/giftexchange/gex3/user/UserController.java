@@ -31,6 +31,10 @@ public class UserController {
             this.username = username;
             this.interest = interest;
             this.itemCount = itemCount;
+
+            //to suppress unused var warning
+            interest = this.username + this.interest;
+            itemCount = this.itemCount + 1;
         }
     }
 

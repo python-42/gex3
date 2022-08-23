@@ -14,7 +14,7 @@
 
         <h1 >Your List</h1>
         <p>Click an item to edit it. Hover over the URL title to see the destination URL.</p>
-        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#formModal" data-backdrop="static">Add Item</button>
+        <button class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#formModal" data-bs-backdrop="static">Add Item</button>
         <div id="error"></div>
         <div style="overflow-x:auto;">
             <table class="table table-dark table-hover mt-6">
@@ -29,7 +29,7 @@
                 <tbody id="tableBody">
                     <tr  onclick="openModal(this.id)" th:each="item : ${items}" th:id="${item.id}">
                         <td th:text="${item.name}" th:id="|NAME${item.id}|">NAME</td>
-                        <td><a th:text="${item.title}" th:href="${item.url}" data-toggle="tooltip"
+                        <td><a th:text="${item.title}" th:href="${item.url}" data-bs-toggle="tooltip"
                                 th:title="${item.url}" th:id="|TITLE${item.id}|"></a></td>
                         <td th:text="${item.comment}" th:id="|COMMENT${item.id}|">COMMENT</td>
                         <!--<td class="material-symbols-outlined">delete</td>-->
@@ -45,7 +45,7 @@
                 <!--header-->
                 <div class="modal-header border-dark">
                     <h1 class="modal-title">Add Item</h1>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <!--body-->
@@ -84,7 +84,7 @@
 
                 <!--footer-->
                 <div class="modal-footer border-dark">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -92,9 +92,12 @@
 
     <script>
         //inits all tooltips on the page
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        const formModal = new bootstrap.Modal(document.getElementById('formModal'), backdrop = "static");
 
         function openModal(id){
             document.forms["itemForm"]["id"].value = id;
@@ -103,12 +106,13 @@
             document.forms["itemForm"]["title"].value = document.getElementById("TITLE"+id).innerText;
             document.forms["itemForm"]["comment"].value = document.getElementById("COMMENT"+id).innerText;
 
-            $("#formModal").modal({backdrop: "static"});
+            formModal.show();
         }
 
-        $('#formModal').on('hidden.bs.modal', function (e) {
+        document.getElementById("formModal").addEventListener("hidden.bs.modal", function(e) {
             document.getElementById("itemForm").reset();
         });
+
     </script>
 
 </body>

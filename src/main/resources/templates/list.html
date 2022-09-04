@@ -25,7 +25,7 @@
                 <tbody id="tableBody">
                     <tr th:each="item : ${items}" th:id="${item.id}">
                         <td th:text="${item.name}">NAME</td>
-                        <td><a th:text="${item.title}" th:href="${item.url}" data-toggle="tooltip"
+                        <td><a th:text="${item.title}" th:href="${item.url}" data-bs-toggle="tooltip"
                             th:title="${item.url}"></a></td>
                         <td th:text="${item.comment}">COMMENT</td>
                         <td th:text = "${item.bought} ? ${item.boughtBy} : 'Not bought'">BOUGHT</td>
@@ -36,10 +36,10 @@
     </div>
 
     <script>
-        //inits all tooltips on the page
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
     </script>
 </body>
 

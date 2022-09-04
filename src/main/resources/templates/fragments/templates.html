@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- This file contains header tags and styling information which should be included in every page-->
+<html>
+    <body>
+        <template id="row" th:fragment = "selfRow">
+            <tr onclick='openModal(this.id)'>
+                <td></td><!--name-->
+                <td><a href='' data-toggle='tooltip'></a></td><!--url and title-->
+                <td></td><!--comment-->
+            </tr>
+        </template>
+
+        <template id="errorModal" th:fragment = "errorModal">
+            <div class='alert alert-danger alert-dismissible mt-3'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <p></p>
+            </div>
+        </template>
+
+        <template id="successModal" th:fragment = "successModal">
+            <div class='alert alert-success alert-dismisible mt-3'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                <p></p>
+            </div>
+        </template>
+    </body>
+</html>

@@ -4,17 +4,17 @@ import java.util.List;
 
 public class WebsocketFormData {
     
-    private List<Object> data;
+    private List<String> data;
 
-    public List<Object> getData(){
+    public List<String> getData(){
         return data;
     }
 
-    public Object getDataPart(int pos){
+    public String getDataPart(int pos){
         return data.get(pos);
     }
 
-    public void setData(List<Object> data){
+    public void setData(List<String> data){
         this.data = data;
     }
 }

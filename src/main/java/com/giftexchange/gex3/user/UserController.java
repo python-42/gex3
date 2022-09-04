@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.giftexchange.gex3.gex.Constants;
-import com.giftexchange.gex3.util.NavblockGenerator;
 import com.giftexchange.gex3.websocket.WebsocketFormData;
 import com.giftexchange.gex3.websocket.WebsocketServerResponse;
 
@@ -85,7 +83,6 @@ public class UserController {
     public String account(Model model, Authentication auth){
         String username = auth.getName();
 
-        model.addAttribute("navblock", NavblockGenerator.generateNavblock(Constants.NAVBLOCK_MAP, "Account"));
         model.addAttribute("interest", userRepository.getInterestForUsername(username));
 
         if(userRepository.getEmailEnabledForUsername(username)){
@@ -103,7 +100,7 @@ public class UserController {
         if(msg.equals("OK")){
             return new WebsocketServerResponse(data.getData(), "output", false, null);
         }
-        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true, null);
+        return new WebsocketServerResponse(msg, "error", true, null);
     }
 
     @MessageMapping("/account/password")
@@ -111,9 +108,9 @@ public class UserController {
     public WebsocketServerResponse accountPasswordForm(WebsocketFormData rawData, Authentication auth) {
         String msg = UserService.updatePassword(userRepository, rawData, auth.getName());
         if(msg.equals("OK")){
-            return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_SUCCESS_MODAL + "Password updated successfully</div>", "output", true, null);
+            return new WebsocketServerResponse("Password updated successfully", "output", true, null);
         }
-        return new WebsocketServerResponse((Object) Constants.CSS_DISMISSABLE_ERROR_MODAL + msg + "</div>", "error", true, null);
+        return new WebsocketServerResponse(msg, "error", true, null);
     }
 
 }

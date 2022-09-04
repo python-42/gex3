@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WebsocketServerResponse {
-    private List<Object> data;
+    private List<String> data;
     private String mode;
     private boolean append;
     private String remove;
@@ -12,26 +12,26 @@ public class WebsocketServerResponse {
 
     public WebsocketServerResponse(){}
 
-    public WebsocketServerResponse(List<Object> data, String mode, boolean append, String remove) {
+    public WebsocketServerResponse(List<String> data, String mode, boolean append, String remove) {
         this.data = data;
         this.mode = mode;
         this.append = append;
         this.remove = remove;
     }
 
-    public WebsocketServerResponse(Object data, String mode, boolean append, String remove){
-        this.data = new ArrayList<Object>();
+    public WebsocketServerResponse(String data, String mode, boolean append, String remove){
+        this.data = new ArrayList<String>();
         this.data.add(data);
         this.mode = mode;
         this.append = append;
         this.remove = remove;
     }
 
-    public List<Object> getData(){
+    public List<String> getData(){
         return data;
     }
 
-    public Object getDataPart(int pos){
+    public String getDataPart(int pos){
         return data.get(pos);
     }
 

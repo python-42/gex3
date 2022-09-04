@@ -25,7 +25,7 @@ export default class WebsocketForm {
     sendData() {
         const value = [];
         for (var x in this.fieldIDs){
-            value.push($(this.fieldIDs[x]).val());
+            value.push(document.getElementById(this.fieldIDs[x]).value);
         }
         this.stompClient.send(this.senderURL, {}, JSON.stringify({'data' : value}));
         document.getElementById(this.formID).reset();
@@ -44,21 +44,21 @@ export default class WebsocketForm {
         if(mode == "error"){
             if(append){
                 for (var x in message){
-                    $(this.errorOutputTextID).append(message[x]);
+                    document.getElementById(this.errorOutputTextID).append(message[x]);
                 }
             }else{
                 for (var x in message){
-                    $(this.errorOutputTextID).text(message[x]);
+                    document.getElementById(this.errorOutputTextID).text(message[x]);
                 }
             }
         }else{
             if(append){
                 for (var x in message){
-                    $(this.outputTextID).append(message[x]);
+                    document.getElementById(this.outputTextID).append(message[x]);
                 }
             }else{
                 for (var x in message){
-                    $(this.outputTextID).text(message[x]);
+                    document.getElementById(this.outputTextID).text(message[x]);
                 }
             }   
         }

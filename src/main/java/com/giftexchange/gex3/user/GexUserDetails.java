@@ -8,11 +8,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.giftexchange.gex3.gex.Constants;
-
 public class GexUserDetails implements UserDetails {
     private UserTable user;
     private String role;
+
+    private final String ROLE_PREFIX = "ROLE_";
 
     public GexUserDetails(UserTable user, String role) {
         this.user = user;
@@ -27,7 +27,7 @@ public class GexUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-        list.add(new SimpleGrantedAuthority(Constants.ROLE_PREFIX + role));
+        list.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));
         return list;
     }
 

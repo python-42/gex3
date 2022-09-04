@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
 
-<head th:insert="fragments/header :: header">
-
+<head>
+    <th:block th:insert="fragments/header :: header"></th:block>
+    <title>GEX: Create Account</title>
 </head>
 
 <body>
@@ -11,16 +12,16 @@
         <h1 class="mb-3">Create An Account</h1>
         <form method="post" name="create" autocomplete="on", th:action="@{/create}" th:object="${data}">
             <div class="form-group">
-                <label for="username-box">Username: </label>
-                <input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="4" maxlength="8" th:field="*{username}" required>
+                <label for="username">Username: </label>
+                <input type="text" name="username" placeholder="Enter A Username" class="form-control" minlength="4" maxlength="8" th:field="*{username}" required>
             </div>
             <div class="form-group">
-                <label for="password-box">Password: </label>
-            <input type="password" name="password-box" placeholder="Enter A Password" class="form-control" minlength="8" maxlength="50" onkeyup="verifyPasswordMatch()" th:field="*{password}" required>
+                <label for="password">Password: </label>
+            <input type="password" name="password" placeholder="Enter A Password" class="form-control" minlength="8" maxlength="50" onkeyup="verifyPasswordMatch()" th:field="*{password}" required>
             </div>
             <div class="form-group">
-            <label for="confirm-box">Confirm Password: </label>
-            <input type="password" name="confirm-box" placeholder="Confirm Your Password" class="form-control" minlength="8" maxlength="50" onkeyup="verifyPasswordMatch()" th:field="*{confirm}" required>
+            <label for="confirm">Confirm Password: </label>
+            <input type="password" name="confirm" placeholder="Confirm Your Password" class="form-control" minlength="8" maxlength="50" onkeyup="verifyPasswordMatch()" th:field="*{confirm}" required>
             </div>
             <button type="submit" id="submitForm" class="btn btn-primary">Create Account</button>
             <p id="feedback"></p>
@@ -32,10 +33,9 @@
     </div>
 
     <script>
-        document.title = "GEX: Create Account";
         function verifyPasswordMatch(){
-            var password = document.forms["create"]["password-box"].value;
-            var confirm = document.forms["create"]["confirm-box"].value;
+            var password = document.forms["create"]["password"].value;
+            var confirm = document.forms["create"]["confirm"].value;
 
             if(password != confirm && password.length > 7 && confirm.length > 7){
                 document.getElementById("feedback").innerHTML = "Passwords do not match!";

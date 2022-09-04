@@ -23,11 +23,11 @@ export default class WebsocketForm {
     }
 
     sendData() {
-        const value = [];
+        const values = [];
         for (var x in this.fieldIDs){
-            value.push(document.getElementById(this.fieldIDs[x]).value);
+            values.push(document.getElementById(this.fieldIDs[x]).value);
         }
-        this.stompClient.send(this.senderURL, {}, JSON.stringify({'data' : value}));
+        this.stompClient.send(this.senderURL, {}, JSON.stringify({'data' : values}));
         document.getElementById(this.formID).reset();
     }
 

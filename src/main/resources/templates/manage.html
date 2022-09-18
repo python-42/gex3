@@ -11,10 +11,14 @@
         <th:block th:insert="fragments/navbar :: navbar"></th:block>
         <div th:replace="fragments/header :: websocket"></div>
         <script type=module th:src="@{/js/manage.js}"></script>
+        <th:block th:insert="fragments/templates :: selfRow"></th:block>
+        <th:block th:insert="fragments/templates :: errorModal"></th:block>
+        <th:block th:insert="fragments/templates :: successModal"></th:block>
 
-        <h1 >Your List</h1>
+        <h1>Your List</h1>
         <p>Click an item to edit it. Hover over the URL title to see the destination URL.</p>
-        <button class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#formModal" data-bs-backdrop="static" onclick = "document.getElementById('itemForm').reset()">Add Item</button>
+        <button class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#formModal"
+            data-bs-backdrop="static" onclick="document.getElementById('itemForm').reset()">Add Item</button>
         <div id="error"></div>
         <div style="overflow-x:auto;">
             <table class="table table-dark table-hover mt-6">
@@ -27,11 +31,11 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr  onclick="openModal(this.id)" th:each="item : ${items}" th:id="${item.id}">
-                        <td th:text="${item.name}" th:id="|NAME${item.id}|">NAME</td>
+                    <tr onclick="openModal(this)" th:each="item : ${items}" th:id="${item.id}">
+                        <td th:text="${item.name}">NAME</td>
                         <td><a th:text="${item.title}" th:href="${item.url}" data-bs-toggle="tooltip"
-                                th:title="${item.url}" th:id="|TITLE${item.id}|"></a></td>
-                        <td th:text="${item.comment}" th:id="|COMMENT${item.id}|">COMMENT</td>
+                                th:title="${item.url}"></a></td>
+                        <td th:text="${item.comment}">COMMENT</td>
                         <!--<td class="material-symbols-outlined">delete</td>-->
                     </tr>
                 </tbody>
@@ -54,8 +58,8 @@
 
                         <div class="form-group">
                             <label for="item">Item: </label>
-                            <input type="text" class="form-control" maxlength="255"
-                                name="item" id="item" placeholder="Item name" required>
+                            <input type="text" class="form-control" maxlength="255" name="item" id="item"
+                                placeholder="Item name" required>
                         </div>
 
                         <div class="form-group">
@@ -76,7 +80,8 @@
                                 placeholder="Any comment" required>
                         </div>
 
-                        <input id="id" type="text" hidden><!--TODO fix this bullshit-->
+                        <input id="id" type="text" hidden>
+                        <!--TODO fix this bullshit-->
 
                         <button class="btn btn-success mt-2" type="submit" name="addBtn" id="addBtn">Save</button>
                     </form>
@@ -94,22 +99,25 @@
         //inits all tooltips on the page
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
+            return new bootstrap.Tooltip(tooltipTriggerEl)
         })
 
         const formModal = new bootstrap.Modal(document.getElementById('formModal'), backdrop = "static");
 
-        function openModal(id){
-            document.forms["itemForm"]["id"].value = id;
-            document.forms["itemForm"]["item"].value = document.getElementById("NAME"+id).innerText;
-            document.forms["itemForm"]["url"].value = document.getElementById("TITLE"+id).attributes.getNamedItem("href").value;
-            document.forms["itemForm"]["title"].value = document.getElementById("TITLE"+id).innerText;
-            document.forms["itemForm"]["comment"].value = document.getElementById("COMMENT"+id).innerText;
+        function openModal(row) {
+            let txt = row.querySelectorAll("td");
+
+            document.forms["itemForm"]["id"].value = row.id;
+
+            document.forms["itemForm"]["item"].value = txt[0].innerText;
+            document.forms["itemForm"]["url"].value = row.querySelector("a").attributes.getNamedItem("href").value;
+            document.forms["itemForm"]["title"].value = txt[1].innerText;
+            document.forms["itemForm"]["comment"].value = txt[2].innerText;
 
             formModal.show();
         }
 
-        document.getElementById("itemForm").addEventListener("submit", function(e) {
+        document.getElementById("itemForm").addEventListener("submit", function (e) {
             formModal.hide();
         });
 

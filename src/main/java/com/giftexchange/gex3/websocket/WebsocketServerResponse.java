@@ -8,23 +8,26 @@ public class WebsocketServerResponse {
     private String mode;
     private boolean append;
     private String remove;
+    private String template;
 
 
     public WebsocketServerResponse(){}
 
-    public WebsocketServerResponse(List<String> data, String mode, boolean append, String remove) {
+    public WebsocketServerResponse(List<String> data, String mode, boolean append, String remove, String template) {
         this.data = data;
         this.mode = mode;
         this.append = append;
         this.remove = remove;
+        this.template = template;
     }
 
-    public WebsocketServerResponse(String data, String mode, boolean append, String remove){
+    public WebsocketServerResponse(String data, String mode, boolean append, String remove, String template){
         this.data = new ArrayList<String>();
         this.data.add(data);
         this.mode = mode;
         this.append = append;
         this.remove = remove;
+        this.template = template;
     }
 
     public List<String> getData(){
@@ -49,5 +52,9 @@ public class WebsocketServerResponse {
 
     public String getRemove(){
         return remove;
+    }
+
+    public String getTemplate(){
+        return template;
     }
 }

@@ -29,9 +29,9 @@ public class ItemController {
     public WebsocketServerResponse manageItemForm(WebsocketFormData data, Authentication auth){
         String msg = ItemService.itemForm(itemRepository, data, auth.getName());
         if(msg.equals("OK")){
-            return new WebsocketServerResponse(data.getData(), "output", true, data.getDataPart(0));
+            return new WebsocketServerResponse(data.getData(), "output", true, data.getDataPart(0), Elements.ROW.value);
         }
-        return new WebsocketServerResponse(msg.substring(0, 1).toUpperCase() + msg.substring(1), "error", true, null);
+        return new WebsocketServerResponse(msg.substring(0, 1).toUpperCase() + msg.substring(1), "error", true, null, Elements.ERROR_MODAL.value);
     }
 
     @GetMapping("/users/{owner}")

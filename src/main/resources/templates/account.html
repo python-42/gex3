@@ -11,6 +11,10 @@
 <body>
     <div th:replace="fragments/header :: websocket"></div>
     <script type=module th:src="@{/js/account.js}"></script>
+    
+    <th:block th:insert="fragments/templates :: errorModal"></th:block>
+    <th:block th:insert="fragments/templates :: successModal"></th:block>
+
     <div class="container-fluid text-light">
         <th:block th:insert="fragments/navbar :: navbar"></th:block>
         <h1>Account</h1>

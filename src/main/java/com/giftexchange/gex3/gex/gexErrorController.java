@@ -1,7 +1,5 @@
 package com.giftexchange.gex3.gex;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -9,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class gexErrorController implements ErrorController {
     
     private static final Logger logger = LoggerFactory.getLogger(gexErrorController.class);
-
-    @Value("${send-ntfy}")
-    private boolean sendNtfy;
 
     @RequestMapping("/error")
     public String error(Model model, HttpServletRequest request){
@@ -43,23 +37,6 @@ public class gexErrorController implements ErrorController {
         }
 
         logger.error("Error code " + status + " at " + request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI) + ", message: " + errorMsg + request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
-
-        //Publish errors using ntfy service (https://ntfy.sh/)
-        if(sendNtfy){
-            Date obj = new Date();
-            String date = obj.toString().replaceAll(" ", "+");;
-            final String newline = "%0D%0A";
-            String ntfy = "https://ntfy.sh/giftexchangeerror/publish?title=GEX+Error:+Code+"+Integer.toString(status)+"&message=GEX+error+occured+at+"+date+ "+." + newline + "Error+Code:+" + Integer.toString(status) + newline + "Error+Message:+" + errorMsg + request.getAttribute(RequestDispatcher.ERROR_EXCEPTION) + newline + "Error+URL:+" + request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
-            
-            try {
-                URL url = new URL(ntfy);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("GET");
-                con.getResponseCode();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         
         return "error";
     }

@@ -26,6 +26,7 @@ export default class WebsocketForm {
     sendData() {
         const values = [];
         for (var x in this.fieldIDs){
+            console.log(this.fieldIDs[x]);
             values.push(document.getElementById(this.fieldIDs[x]).value);
         }
         this.stompClient.send(this.senderURL, {}, JSON.stringify({'data' : values}));
@@ -38,29 +39,31 @@ export default class WebsocketForm {
         var append = JSON.parse(data).append;
         var remove = JSON.parse(data).remove;
         var templateName = JSON.parse(data).template;
-
-        if(remove!=null && remove!=""){
-            document.getElementById(remove).remove();
-        }
-        const template = document.querySelector(templateName);
-        const clone = document.importNode(template.content, true);
-
-        if(clone.querySelectorAll("td").length == 0){
-            let txt = clone.querySelectorAll("p")
-            for (let x in txt){ 
-                txt[x].textContent = message[x];
+        if(templateName != null && templateName != ""){
+            console.log(templateName);
+            if(remove!=null && remove!=""){
+                document.getElementById(remove).remove();
             }
-        }else{
-            clone.querySelector("tr").id = message[0];
-
-            let link = clone.querySelector("a");
-            link.href = message[2];//url
-            link.textContent = message[3];//url title
-
-            let txt = clone.querySelectorAll("td");
-            txt[0].textContent = message[1];//name
-            txt[2].textContent = message[4];//comment
-            
+            const template = document.querySelector(templateName);
+            const clone = document.importNode(template.content, true);
+    
+            if(clone.querySelectorAll("td").length == 0){
+                let txt = clone.querySelectorAll("p")
+                for (let x in txt){ 
+                    txt[x].textContent = message[x];
+                }
+            }else{
+                clone.querySelector("tr").id = message[0];
+    
+                let link = clone.querySelector("a");
+                link.href = message[2];//url
+                link.textContent = message[3];//url title
+    
+                let txt = clone.querySelectorAll("td");
+                txt[0].textContent = message[1];//name
+                txt[2].textContent = message[4];//comment
+                
+            }
         }
 
         if(mode == "error"){
@@ -70,7 +73,7 @@ export default class WebsocketForm {
                 }
             }else{
                 for (var x in message){
-                    document.getElementById(this.errorOutputTextID).text(message[x]);
+                    document.getElementById(this.errorOutputTextID).textContent = message[x];
                 }
             }
         }else{
@@ -80,7 +83,7 @@ export default class WebsocketForm {
                 }
             }else{
                 for (var x in message){
-                    document.getElementById(this.outputTextID).text(message[x]);
+                    document.getElementById(this.outputTextID).textContent = message[x];
                 }
             }   
         }

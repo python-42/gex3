@@ -1,5 +1,7 @@
 package com.giftexchange.gex3.user;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -24,6 +26,7 @@ public interface UserRepository extends CrudRepository<UserTable, Integer> {
     String getPasswordForUsername(@Param("username")String usernmae);
 
     //interest
+    @Transactional
     @Modifying
     @Query(value = "update user u set u.interest = :interest where u.username = :username")
     int updateInterestForUsername(@Param("interest")String interest, @Param("username")String usernmae);

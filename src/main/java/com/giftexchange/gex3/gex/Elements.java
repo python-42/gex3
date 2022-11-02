@@ -1,4 +1,4 @@
-package com.giftexchange.gex3.item;
+package com.giftexchange.gex3.gex;
 
 public enum Elements {
     ROW("#row"),

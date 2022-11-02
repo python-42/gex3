@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.giftexchange.gex3.item.Elements;
+import com.giftexchange.gex3.gex.Elements;
 import com.giftexchange.gex3.websocket.WebsocketFormData;
 import com.giftexchange.gex3.websocket.WebsocketServerResponse;
 

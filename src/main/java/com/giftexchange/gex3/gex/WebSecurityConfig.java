@@ -22,7 +22,10 @@ public class WebSecurityConfig {
             .permitAll()
             .and()
             .logout()
-            .permitAll();
+            .and().csrf().disable()//remove eventually see https://www.baeldung.com/spring-security-csrf and https://docs.spring.io/spring-security/reference/servlet/authentication/logout.html
+            ;
+            //.invalidateHttpSession(true)
+            //.deleteCookies("JSESSIONID");
 
       return http.build();
    }
